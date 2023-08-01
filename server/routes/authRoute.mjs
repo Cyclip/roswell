@@ -95,14 +95,11 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // hash password
-        const hashedPassword = await hashPassword(password);
-
         // Check if user exists
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username }).select("+password");
         if (user) {
             // Check if password is correct
-            const isMatch = await user.matchPassword(hashedPassword);
+            const isMatch = await user.matchPassword(password);
             if (isMatch) {
                 // Sign JWT and return
                 const token = user.getToken();
