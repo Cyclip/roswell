@@ -130,6 +130,41 @@ router.post("/login", async (req, res) => {
     }
 });
 
+// checkToken route
+router.post("/checkToken", async (req, res) => {
+    try {
+        // Get username and token from request body
+        const { username, token } = req.body;
+
+        // Check if user exists
+        const user = await User.findOne({ username });
+
+        if (user) {
+            // Check if token is valid
+            const isValid = user.checkToken(token);
+
+            if (isValid) {
+                return res.status(200).json({
+                    success: true,
+                    message: 'Token is valid'
+                });
+            }
+        }
+
+        return res.status(400).json({
+            success: false,
+            error: 'Token is invalid'
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Internal server error'
+        });
+    }
+});
+
+
 // ==================== EXPORT ====================
 
 export default router;

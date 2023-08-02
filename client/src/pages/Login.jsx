@@ -1,7 +1,8 @@
 import React, {
     useState,
     useContext,
-    useReducer
+    useReducer,
+    useEffect
 } from "react";
 
 import UserContext from "../contexts/UserContext";
@@ -21,6 +22,13 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [_, forceUpdate] = useReducer(x => x + 1, 0);
+
+    // check if user is logged in
+    useEffect(() => {
+        if (localStorage.getItem("user")) {
+            window.location.href = "/";
+        }
+    })
 
     const {
         setUser

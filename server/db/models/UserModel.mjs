@@ -111,6 +111,11 @@ UserSchema.methods.getToken = function() {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
 }
 
+// Check token
+UserSchema.methods.checkToken = function(token) {
+    return jwt.verify(token, process.env.JWT_SECRET);
+}
+
 // Match user entered password to hashed password in database
 UserSchema.methods.matchPassword = async function(enteredPassword) {
     console.log(enteredPassword, this.password);

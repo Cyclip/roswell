@@ -18,3 +18,39 @@ export const login = async (username, password) => {
 
     return response.data;
 }
+
+export const register = async (username, email, password) => {
+    const data = {
+        username: username,
+        email: email,
+        password: password
+    };
+
+    const response = await axios.post(`${BASE}/auth/register`, data)
+    .catch((error) => {
+        console.log(error);
+        return error.response;
+    });
+
+    console.log(response);
+
+    return response.data;
+}
+
+// check if a token is valid (unexpired & unmanipulated)
+export const checkToken = async (username, token) => {
+    const data = {
+        username: username,
+        token: token
+    };
+
+    const response = await axios.post(`${BASE}/auth/checkToken`, data)
+    .catch((error) => {
+        console.log(error);
+        return error.response;
+    });
+
+    console.log(response);
+
+    return response.data;
+}
