@@ -69,7 +69,7 @@ const UserSchema = new Schema({
         select: false,
     },
     // fields for favourited posts and comments
-    favourites: {
+    saved: {
         posts: [{
             type: Schema.Types.ObjectId,
             ref: 'Post',

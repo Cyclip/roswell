@@ -14,7 +14,7 @@ export function authenticationMiddleware(req, res, next) {
         next();
     }
     catch (err) {
-        console.log(err);
+        console.log("token", token, err);
         return res.status(401).json({ message: 'Authentication failed' });
     }
 }

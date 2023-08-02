@@ -19,6 +19,9 @@ export const UserProvider = ({ children }) => {
             token: '',
             profilePicture: '',
           };
+
+          // Remove invalid token from local storage
+          localStorage.removeItem('user');
         }
       });
 

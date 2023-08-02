@@ -30,8 +30,6 @@ router.post("/create", authenticationMiddleware, async (req, res) => {
         // Get body from request
         const body = req.body;
 
-        console.log(body);
-
         // Create post models
         const postInteractions = new PostInteractionsModel();
         const postContent = new PostContentModel({
@@ -184,6 +182,104 @@ router.post("/like/:id", authenticationMiddleware, async (req, res) => {
             success: true,
             postInteractions: postInteractions
         });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Internal server error'
+        });
+    }
+});
+
+// toggle save
+router.post("/save/:id", authenticationMiddleware, async (req, res) => {
+    // Get post id from request
+    const id = req.params.id;
+
+    try {
+        // Get post from database
+        const post = await PostModel.findById(id);
+
+        // Return error if post does not exist
+        if (!post) {
+            return res.status(400).json({
+                success: false,
+                error: 'Post does not exist'
+            });
+        }
+        const postInteractions = await PostInteractionsModel.findById(post.interactions);
+
+        // Find the user by ID
+        const user = await UserModel.findById(req.user.id).select('+saved.posts');
+
+        if (!user) {
+        console.log('User not found');
+        return;
+        }
+
+        const savedPostsArray = user.saved.posts;
+
+        // Check if the post ID is already in the array
+        const postIndex = savedPostsArray.indexOf(post._id);
+        let isSaved = false;
+
+        // Toggle the post ID based on its presence in the array
+        if (postIndex === -1) {
+            // Post ID is not in the array, so add it
+            savedPostsArray.push(post._id);
+            postInteractions.saves++;
+            isSaved = true;
+        } else {
+            // Post ID is in the array, so remove it
+            savedPostsArray.splice(postIndex, 1);
+            postInteractions.saves--;
+        }
+
+        // Save the updated user document
+        await user.save();
+        await postInteractions.save();
+
+        return res.status(200).json({
+            success: true,
+            isSaved: isSaved,
+            saves: postInteractions.saves
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Internal server error'
+        });
+    }
+});
+
+// is post saved?
+router.post("/isSaved/:id", authenticationMiddleware, async (req, res) => {
+    // Get post id from request
+    const id = req.params.id;
+
+    try {
+        // Get user from database
+        const user = await UserModel.findById(req.user.id).select('+saved.posts');
+
+        // Return error if user does not exist
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                error: 'User does not exist'
+            });
+        }
+
+        // Check if user has already saved post
+        const saved = user.saved.posts.includes(id);
+
+        // Return saved
+        return res.status(200).json({
+            success: true,
+            saved: saved
+        });
+
     } catch (err) {
         console.log(err);
         return res.status(500).json({

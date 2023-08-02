@@ -77,3 +77,41 @@ export const likePost = async (id, token) => {
 export const isLiked = (post, id) => {
     return post.interactions.likes.includes(id);
 }
+
+export const savePost = async (id, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const response = await axios.post(`${BASE}/post/save/${id}`, {}, config)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}
+
+export const isSaved = async (post, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const response = await axios.post(`${BASE}/post/isSaved/${post}`, {}, config)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}

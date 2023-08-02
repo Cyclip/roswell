@@ -4,6 +4,7 @@ import { likePost } from "../services/post";
 import { GoHeartFill } from "react-icons/go";
 import "../styles/LikePost.css"
 import { isLiked } from "../services/post";
+import { toast } from "react-hot-toast";
 
 const LikePost = ({ post, setPostInteractions }) => {
     const { user } = useContext(UserContext);
@@ -13,11 +14,8 @@ const LikePost = ({ post, setPostInteractions }) => {
     );
 
     useEffect(() => {
-        if (!user) return;
         // post may not have been loaded yet, so check if it exists
         if (!post) return;
-        console.log(isLiked(post, user.id));
-
         setLiked(isLiked(post, user.id));
     }, [user, post]);
 
@@ -26,6 +24,9 @@ const LikePost = ({ post, setPostInteractions }) => {
         const resp = await likePost(post.id, user.token);
         if (resp.success) {
             setPostInteractions(resp.postInteractions);
+        } else {
+            console.log(resp.message);
+            toast.error("Error liking post");
         }
     }
 

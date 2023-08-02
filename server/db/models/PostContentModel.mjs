@@ -23,7 +23,7 @@ const PostContentSchema = new Schema({
     body: {
         type: String,
         default: '',
-        maxlength: [1000, 'Body must be less than 1000 characters long']
+        maxlength: [4000, 'Body must be less than 1000 characters long']
     },
     // Image URL of the post
     image: {

@@ -8,18 +8,17 @@ const PostInteractionsSchema = new Schema({
         ref: 'User',
         default: []
     }],
-    // All saves
-    saves: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        default: []
-    }],
     // All comments
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment',
         default: []
     }],
+    // Number of saves
+    saves: {
+        type: Number,
+        default: 0
+    }
 });
 
 export default mongoose.model('PostInteractions', PostInteractionsSchema);

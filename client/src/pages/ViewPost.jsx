@@ -5,6 +5,8 @@ import "../styles/ViewPost.css"
 import { getPost } from "../services/post";
 import User from "../components/User";
 import LikePost from "../components/LikePost";
+import CommentCount from "../components/CommentCount";
+import SavePost from "../components/SavePost";
 
 /*
 Example post
@@ -79,6 +81,10 @@ const ViewPost = () => {
                         });
                     }}
                 />
+
+                <CommentCount post={post} />
+
+                <SavePost post={post} />
             </div>
         </div>
     );

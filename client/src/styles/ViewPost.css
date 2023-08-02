@@ -53,3 +53,25 @@
         margin-top: 2rem;
     }
 }
+
+.view_post-post_header_interactions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.view_post h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 1rem 0;
+}
+
+.view_post p {
+    color: var(--text-color);
+    font-weight: 100;
+    line-height: 1.5;
+    margin: 1rem 0;
+}
