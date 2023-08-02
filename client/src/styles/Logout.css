@@ -28,3 +28,13 @@
     opacity: 0.8;
     margin: 10px;
 }
+
+/* responsiveness */
+@media screen and (max-width: 480px) {
+    .logout_page .logout_page_title {
+        font-size: 3rem;
+    }
+    .logout_page .logout_page_subtitle {
+        font-size: 0.8rem;
+    }
+}

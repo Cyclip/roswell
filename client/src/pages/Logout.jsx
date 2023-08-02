@@ -35,7 +35,7 @@ const Logout = () => {
         // delete user from localStorage
         localStorage.removeItem("user");
         // redirect to home page
-        window.location.href = "/";
+        // window.location.href = "/";
     });
 
     return (
