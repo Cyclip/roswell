@@ -1,0 +1,157 @@
+@import "../App.css";
+
+nav {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 0 2rem;
+    background-color: var(--color-primary-dark-2);
+    color: var(--color-text-light);
+    height: 10vh;
+    position: relative;
+    z-index: 10;
+    gap: 2rem;
+}
+
+nav .logo {
+    /* center all elements in the div */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+nav .logo a {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-family: 'Montserrat-Alt1', sans-serif;
+}
+
+nav .logo span {
+    color: var(--color-text-accent);
+}
+
+nav .nav_left {
+    flex: 1;
+    justify-content: left;
+}
+
+nav .nav_right {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+nav .nav_side {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+nav .nav_side a {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+nav .nav_side a:hover {
+    color: var(--color-text-accent);
+}
+
+nav .nav_side a.active {
+    color: var(--color-text-accent);
+}
+
+/* hamburger */
+nav .hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--color-text-light);
+    margin-top: 5px;
+}
+
+nav .hamburger_menu {
+    position: absolute;
+    top: 10vh;
+    height: 90vh;
+    left: 0;
+    background-color: var(--color-primary-dark-2);
+    width: 100%;
+    height: 90vh;
+    flex-direction: column;
+    justify-self: center;  
+    align-items: center;
+    gap: 3rem;
+    overflow-x: hidden;
+    padding: 2rem 0;
+    transition: all 0.5s ease;
+    transform: translateX(-100%);
+    display: none;
+}
+
+nav .hamburger_menu.open {
+    transform: translateX(0);
+    display: flex;
+}
+
+nav .hamburger_menu a {
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+nav .hamburger_menu a:hover {
+    color: var(--color-text-accent);
+}
+
+nav .hamburger_menu a.active {
+    color: var(--color-text-accent);
+}
+
+/* responsiveness 
+3 sizes
+1. mobile < 768px
+2. tablet > 768px
+3. desktop > 1024px
+*/
+
+@media screen and (max-width: 768px) {
+    nav {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 15vh;
+    }
+    
+    nav .nav_side {
+        display: none;
+    }
+
+    nav .hamburger {
+        display: block;
+    }
+
+    nav .hamburger_menu {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    nav {
+        padding: 0 1rem;
+    }
+}
+
