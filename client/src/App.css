@@ -25,13 +25,17 @@
   --color-btn-secondary: #2a9d8f;
   --color-btn-secondary-hover: #269286;
   --color-btn-secondary-active: #1e7e73;
-  --color-btn-tertiary: #eba2a7;
-  --color-btn-tertiary-hover: #e85560;
-  --color-btn-tertiary-active: #bb3f4a;
+  --color-btn-tertiary: #ba5238;
+  --color-btn-tertiary-hover: #a6432a;
+  --color-btn-tertiary-active: #cf6247;
 
   /* font */
   --font-family: 'Nunito', sans-serif;
   --font-family2: 'Montserrat-Alt1', sans-serif;
+}
+
+body {
+  background-color: var(--color-primary-dark);
 }
 
 .App {

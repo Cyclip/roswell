@@ -14,12 +14,10 @@
 }
 
 .np-container {
-    border: 1px solid red;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 8rem;
+    gap: 5rem;
 }
 
 @media (max-width: 768px) {
@@ -30,19 +28,55 @@
 }
 
 .np-container .form-container {
-    border: 1px solid blue;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 5;
 }
 
 .np-container .rules {
-    border: 1px solid green;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     flex: 2;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.np-container .rules .rule {
+    padding: 1rem;
+    background-color: #2d2d2d;
+    color: white;
+    display: flex;
+    justify-content: left;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.np-container .rules .rule:nth-child(odd) {
+    background-color: #343434;
+}
+
+.np-container .rules .rule .rule__index {
+    font-weight: bold;
+    color: var(--color-text-accent2);
+}
+
+.rule__text {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--color-text-light);
+}
+
+.rule__subtext {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    font-weight: 100;
+    margin-top: 0.1rem;
+}
+
+.rule_text_cont {
+    display: flex;
+    flex-direction: column;
 }
 
 .np-form-group {
@@ -65,10 +99,11 @@
     cursor: pointer;
     flex: 1;
     background-color: #414141;
+    transition: 0.2s ease-in-out;
 }
 
 .type-tabs .type-tab.selected {
-    background-color: var(--color-btn-primary);
+    background-color: var(--color-btn-tertiary);
 }
 
 .np-form-group textarea {

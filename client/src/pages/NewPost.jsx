@@ -15,6 +15,34 @@ import Loading from "../assets/loading.svg";
 import "../styles/NewPost.css";
 
 
+const RULES = [
+    [
+        "No spamming or misuse",
+        "Spamming the feed with posts makes it harder for other users to find good content. Please refrain from doing so."
+    ],
+    [
+        "No NSFW content",
+        "Uncensored means no censorship, except for NSFW content. Gore and sexual content is disallowed."
+    ],
+    [
+        "No hate speech",
+        "Opinions are allowed, but hate speech is not."
+    ],
+    [
+        "No personal attacks",
+        "Respect should be given to everyone, even if you disagree with them."
+    ],
+    [
+        "No illegal content",
+        "Illegal content is not allowed. This includes piracy, doxxing, etc."
+    ],
+    [
+        "Have fun!",
+        "Roswell is a place for you to share your thoughts and ideas. Have fun!"
+    ]
+];
+
+
 const TypeTab = ({ type, setType, selected }) => {
     return (
         <div
@@ -150,7 +178,17 @@ const NewPost = () => {
                     </form>
                 </div>
                 <div className="rules">
-                    <h2>Rules</h2>
+                    {
+                        RULES.map((rule, index) => (
+                            <div className="rule" key={index}>
+                                <span className="rule__index">{index + 1}</span>
+                                <div className="rule_text_cont">
+                                    <span className="rule__text">{rule[0]}</span>
+                                    <span className="rule__subtext">{rule[1]}</span>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </div>
