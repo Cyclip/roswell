@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { UserContext } from "../contexts/UserContext";
 
@@ -9,31 +9,12 @@ import {
     RxHamburgerMenu
 } from "react-icons/rx";
 
-/*
-Logged out buttons ==
-Left:
-    Home
-    About
-Right:
-    Login
-    Register
-
-Logged in buttons ==
-Left:
-    Home
-    About
-    Feed
-Right:
-    New post
-    Profile
-    Logout
-*/
 
 const NavBar = () => {
     const { user } = useContext(UserContext);
     const { isLoggedIn, username, profilePicture } = user;
-
     const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+    const location = useLocation();
 
     return (
         <nav>
@@ -45,31 +26,31 @@ const NavBar = () => {
 
             <div className="nav_side nav_left">
                 <Link to="/" className={
-                    window.location.pathname === "/" ? "active" : ""
+                    location.pathname === "/" ? "active" : ""
                 }>Home</Link>
                 <Link to="/about" className={
-                    window.location.pathname === "/about" ? "active" : ""
+                    location.pathname === "/about" ? "active" : ""
                 }>About</Link>
                 {isLoggedIn && <Link to="/feed" className={
-                    window.location.pathname === "/feed" ? "active" : ""
+                    location.pathname === "/feed" ? "active" : ""
                 }>Feed</Link>}
             </div>
 
             <div className="nav_side nav_right">
                 {!isLoggedIn && <Link to="/login" className={
-                    window.location.pathname === "/login" ? "active" : ""
+                    location.pathname === "/login" ? "active" : ""
                 }>Login</Link>}
                 {!isLoggedIn && <Link to="/register" className={
-                    window.location.pathname === "/register" ? "active" : ""
+                    location.pathname === "/register" ? "active" : ""
                 }>Register</Link>}
                 {isLoggedIn && <Link to="/new-post" className={
-                    window.location.pathname === "/new-post" ? "active" : ""
+                    location.pathname === "/new-post" ? "active" : ""
                 }>New post</Link>}
                 {isLoggedIn && <Link to={`/profile/${username}`} className={
-                    window.location.pathname === `/profile/${username}` ? "active" : ""
+                    location.pathname === `/profile/${username}` ? "active" : ""
                 }>Profile</Link>}
                 {isLoggedIn && <Link to="/logout" className={
-                    window.location.pathname === "/logout" ? "active" : ""
+                    location.pathname === "/logout" ? "active" : ""
                 }>Logout</Link>}
             </div>
 
@@ -82,29 +63,29 @@ const NavBar = () => {
 
             <div className={`hamburger_menu ${isHamburgerOpen ? "open" : ""}`}>
                 <Link to="/" className={
-                    window.location.pathname === "/" ? "active" : ""
+                    location.pathname === "/" ? "active" : ""
                 }>Home</Link>
                 <Link to="/about" className={
-                    window.location.pathname === "/about" ? "active" : ""
+                    location.pathname === "/about" ? "active" : ""
                 }>About</Link>
                 {isLoggedIn && <Link to="/feed" className={
-                    window.location.pathname === "/feed" ? "active" : ""
+                    location.pathname === "/feed" ? "active" : ""
                 }>Feed</Link>}
 
                 {!isLoggedIn && <Link to="/login" className={
-                    window.location.pathname === "/login" ? "active" : ""
+                    location.pathname === "/login" ? "active" : ""
                 }>Login</Link>}
                 {!isLoggedIn && <Link to="/register" className={
-                    window.location.pathname === "/register" ? "active" : ""
+                    location.pathname === "/register" ? "active" : ""
                 }>Register</Link>}
                 {isLoggedIn && <Link to="/new-post" className={
-                    window.location.pathname === "/new-post" ? "active" : ""
+                    location.pathname === "/new-post" ? "active" : ""
                 }>New post</Link>}
                 {isLoggedIn && <Link to={`/profile/${username}`} className={
-                    window.location.pathname === `/profile/${username}` ? "active" : ""
+                    location.pathname === `/profile/${username}` ? "active" : ""
                 }>Profile</Link>}
                 {isLoggedIn && <Link to="/logout" className={
-                    window.location.pathname === "/logout" ? "active" : ""
+                    location.pathname === "/logout" ? "active" : ""
                 }>Logout</Link>}
             </div>
         </nav>

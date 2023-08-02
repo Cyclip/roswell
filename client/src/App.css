@@ -101,14 +101,6 @@ button:focus {
   outline: none;
 }
 
-button:hover {
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(2px);
-}
-
 /* primary button */
 button.btn-primary {
   background-color: var(--color-btn-primary);
@@ -149,4 +141,33 @@ button.btn-tertiary:hover {
 
 button.btn-tertiary:active {
   background-color: var(--color-btn-tertiary-active);
+}
+
+/* input */
+input {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #2d2d2d;
+  color: var(--color-text-light);
+  transition: all 0.2s ease-in-out;
+}
+
+input:hover {
+  background-color: #3d3d3d;
+}
+
+input:focus {
+  outline: none;
+  background-color: #3d3d3d;
+}
+
+/* responsiveness for input */
+@media screen and (max-width: 500px) {
+  input {
+    font-size: 0.75rem;
+  }
 }

@@ -1,8 +1,11 @@
 import React from 'react';
-import Home from './pages/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import NotFound from './pages/NotFound';
+import NotFound from './pages/NotFound';
+import Home from './pages/Home';
 import NavBar from './components/NavBar';
+import Login from './pages/Login';
+
+import { Toaster } from "react-hot-toast";
 
 import { UserProvider } from './contexts/UserContext';
 
@@ -16,8 +19,19 @@ const App = () => {
           <NavBar />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
+          <Toaster
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: "#363636",
+                color: "#fff",
+                fontFamily: "Nunito",
+              },
+            }}
+          />
         </Router>
       </div>
     </UserProvider>
