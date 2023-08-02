@@ -26,7 +26,11 @@ const Login = () => {
     // check if user is logged in
     useEffect(() => {
         if (localStorage.getItem("user")) {
-            window.location.href = "/";
+            // check if user is logged in
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user.isLoggedIn) {
+                window.location.href = "/feed";
+            }
         }
     })
 
