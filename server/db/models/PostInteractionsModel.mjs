@@ -5,17 +5,20 @@ const PostInteractionsSchema = new Schema({
     // All likes
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        default: []
     }],
     // All saves
     saves: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        default: []
     }],
     // All comments
     comments: [{
         type: Schema.Types.ObjectId,
-        ref: 'Comment'
+        ref: 'Comment',
+        default: []
     }],
 });
 

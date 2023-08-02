@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import User from "../db/models/UserModel.mjs";
 import { isEmail, isPassword, isUsername, hashPassword } from "../utils/auth.mjs";
 
