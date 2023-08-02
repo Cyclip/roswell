@@ -24,7 +24,8 @@ const UserSchema = new Schema({
         required: [true, 'Please enter an email'],
         unique: [true, 'Email already exists'],
         trim: true,
-        validate: [isEmail, 'Please enter a valid email']
+        validate: [isEmail, 'Please enter a valid email'],
+        select: false // Don't return email when fetching user
     },
     // Password of the user (hashed using bcrypt)
     password: {
@@ -40,7 +41,8 @@ const UserSchema = new Schema({
     resetPasswordExpire: Date,
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        select: false,
     },
     // User's role (admin or user)
     role: {
@@ -52,43 +54,49 @@ const UserSchema = new Schema({
     profilePicture: {
         type: String,
         default: DEFAULT_PFP,
-        select: false // Don't return profile picture when fetching user
     },
     // User's bio
     bio: {
         type: String,
         default: '',
-        maxlength: [100, 'Bio must be less than 100 characters long']
+        maxlength: [100, 'Bio must be less than 100 characters long'],
+        select: false,
     },
     // User's birthday
     birthday: {
         type: Date,
-        default: null
+        default: null,
+        select: false,
     },
     // fields for favourited posts and comments
     favourites: {
         posts: [{
             type: Schema.Types.ObjectId,
-            ref: 'Post'
+            ref: 'Post',
+            select: false,
         }],
         comments: [{
             type: Schema.Types.ObjectId,
-            ref: 'Comment'
+            ref: 'Comment',
+            select: false,
         }]
     },
     // fields for user's followers and following
     followers: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        select: false,
     }],
     following: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        select: false,
     }],
     // User's notifications
     notifications: [{
         type: Schema.Types.ObjectId,
-        ref: 'Notification'
+        ref: 'Notification',
+        select: false,
     }]
 });
 

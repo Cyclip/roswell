@@ -1,0 +1,81 @@
+@import "../App.css";
+
+.new-post {
+    width: 100%;
+    height: 90vh;
+    padding: 4rem 12rem;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .new-post {
+        padding: 2rem 2rem;
+    }
+}
+
+.np-container {
+    border: 1px solid red;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8rem;
+}
+
+@media (max-width: 768px) {
+    .np-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+.np-container .form-container {
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 5;
+}
+
+.np-container .rules {
+    border: 1px solid green;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 2;
+}
+
+.np-form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.type-tabs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 0;
+}
+
+.type-tabs .type-tab {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    flex: 1;
+    background-color: #414141;
+}
+
+.type-tabs .type-tab.selected {
+    background-color: var(--color-btn-primary);
+}
+
+.np-form-group textarea {
+    height: 8rem;
+}
+
+.np-form-group button img {
+    width: 1.5rem;
+    height: 1.5rem;
+}

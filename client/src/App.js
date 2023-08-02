@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Logout from './pages/Logout';
+import NewPost from './pages/NewPost';
 
 import { Toaster } from "react-hot-toast";
 
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/newpost" element={<NewPost />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster

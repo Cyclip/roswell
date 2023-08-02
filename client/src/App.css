@@ -171,3 +171,32 @@ input:focus {
     font-size: 0.75rem;
   }
 }
+
+/* textarea */
+textarea {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #2d2d2d;
+  color: var(--color-text-light);
+  transition: all 0.2s ease-in-out;
+}
+
+textarea:hover {
+  background-color: #3d3d3d;
+}
+
+textarea:focus {
+  outline: none;
+  background-color: #3d3d3d;
+}
+
+/* responsiveness for textarea */
+@media screen and (max-width: 500px) {
+  textarea {
+    font-size: 0.75rem;
+  }
+}

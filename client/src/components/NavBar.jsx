@@ -43,8 +43,8 @@ const NavBar = () => {
                 {!isLoggedIn && <Link to="/register" className={
                     location.pathname === "/register" ? "active" : ""
                 }>Register</Link>}
-                {isLoggedIn && <Link to="/new-post" className={
-                    location.pathname === "/new-post" ? "active" : ""
+                {isLoggedIn && <Link to="/newpost" className={
+                    location.pathname === "/newpost" ? "active" : ""
                 }>New post</Link>}
                 {isLoggedIn && <Link to={`/profile/${username}`} className={
                     location.pathname === `/profile/${username}` ? "active" : ""
@@ -78,8 +78,8 @@ const NavBar = () => {
                 {!isLoggedIn && <Link to="/register" className={
                     location.pathname === "/register" ? "active" : ""
                 }>Register</Link>}
-                {isLoggedIn && <Link to="/new-post" className={
-                    location.pathname === "/new-post" ? "active" : ""
+                {isLoggedIn && <Link to="/newpost" className={
+                    location.pathname === "/newpost" ? "active" : ""
                 }>New post</Link>}
                 {isLoggedIn && <Link to={`/profile/${username}`} className={
                     location.pathname === `/profile/${username}` ? "active" : ""

@@ -28,7 +28,8 @@ const CommentSchema = new Schema({
     // All replies
     replies: [{
         type: Schema.Types.ObjectId,
-        ref: 'Comment'
+        ref: 'Comment',
+        select: false,
     }],
     // Date the comment was created
     createdAt: {

@@ -5,7 +5,7 @@ export function authenticationMiddleware(req, res, next) {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-        return res.status(401).json({ message: 'Authentication required.' });
+        return res.status(401).json({ message: 'Authentication required' });
     }
 
     try {
@@ -15,6 +15,6 @@ export function authenticationMiddleware(req, res, next) {
     }
     catch (err) {
         console.log(err);
-        return res.status(401).json({ message: 'Authentication failed.' });
+        return res.status(401).json({ message: 'Authentication failed' });
     }
 }

@@ -9,7 +9,7 @@ const PostContentSchema = new Schema({
     // Type of post (text or image)
     type: {
         type: String,
-        enum: ['text', 'image'],
+        enum: ['Content', 'Media'],
         required: [true, 'Please enter a type']
     },
     // Title of the post
