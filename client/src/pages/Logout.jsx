@@ -4,6 +4,8 @@ import React, {
     useState
 } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import UserContext from "../contexts/UserContext";
 import "../styles/Logout.css"
 
@@ -13,6 +15,8 @@ const Logout = () => {
         setUser
     } = useContext(UserContext);
     const [username, setUsername] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (localStorage.getItem("user")) {
@@ -35,7 +39,7 @@ const Logout = () => {
         // delete user from localStorage
         localStorage.removeItem("user");
         // redirect to home page
-        // window.location.href = "/";
+        navigate("/");
     });
 
     return (

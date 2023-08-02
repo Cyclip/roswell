@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Logout from './pages/Logout';
 import NewPost from './pages/NewPost';
+import ViewPost from './pages/ViewPost';
 
 import { Toaster } from "react-hot-toast";
 
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/newpost" element={<NewPost />} />
+            <Route path="/post/:id" element={<ViewPost />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster

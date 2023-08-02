@@ -1,0 +1,36 @@
+@import "../App.css";
+
+.view_post {
+    width: 100%;
+    min-height: 90vh;
+    padding: 2rem 8rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.view_post_content {
+    border: 1px solid red;
+    flex: 2;
+    margin-right: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.view_post-post {
+    border: 1px solid red;
+    flex: 2;
+
+    background-color: var(--color-primary-dark-2);
+    padding: 1rem;
+}
+
+.view_post-sidebar {
+    border: 1px solid orange;
+    flex: 1;
+}

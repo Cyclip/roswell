@@ -39,3 +39,18 @@ export const createPost = async (type, title, content, image, token) => {
 
     return response;
 }
+
+export const getPost = async (id) => {
+    const postResponse = await axios.get(`${BASE}/post/get/${id}`)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    // get
+
+    return postResponse;
+}
