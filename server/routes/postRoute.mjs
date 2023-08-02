@@ -125,4 +125,72 @@ router.get("/get/:id", async (req, res) => {
     }
 });
 
+// toggle like on a post
+router.post("/like/:id", authenticationMiddleware, async (req, res) => {
+    // Get post id from request
+    const id = req.params.id;
+
+    try {
+        // Get post from database
+        const post = await PostModel.findById(id);
+
+        // Return error if post does not exist
+        if (!post) {
+            return res.status(400).json({
+                success: false,
+                error: 'Post does not exist'
+            });
+        }
+
+        // Get user from database
+        const user = await UserModel.findById(req.user.id);
+
+        // Return error if user does not exist
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                error: 'User does not exist'
+            });
+        }
+
+        // Get post interactions from database
+        const postInteractions = await PostInteractionsModel.findById(post.interactions);
+
+        // Return error if post interactions do not exist
+        if (!postInteractions) {
+            return res.status(400).json({
+                success: false,
+                error: 'Post interactions do not exist'
+            });
+        }
+
+        // Check if user has already liked post
+        const liked = postInteractions.likes.includes(user._id);
+
+        // Toggle like
+        if (liked) {
+            // Remove like
+            postInteractions.likes.pull(user._id);
+        } else {
+            // Add like
+            postInteractions.likes.push(user._id);
+        }
+
+        // Save post interactions
+        await postInteractions.save();
+
+        // Return post interactions
+        return res.status(200).json({
+            success: true,
+            postInteractions: postInteractions
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Internal server error'
+        });
+    }
+});
+
 export default router;

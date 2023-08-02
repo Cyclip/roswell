@@ -33,6 +33,7 @@ const Logout = () => {
                 isLoggedIn: false,
                 username: null,
                 token: null,
+                id: null,
                 profilePicture: null,
             }
         });

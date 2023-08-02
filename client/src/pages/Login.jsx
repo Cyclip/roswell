@@ -60,6 +60,7 @@ const Login = () => {
                     username: username,
                     token: resp.token,
                     profilePicture: null,
+                    id: resp.id,
                 }
             });
 
@@ -69,6 +70,7 @@ const Login = () => {
                 username: username,
                 token: resp.token,
                 profilePicture: null,
+                id: resp.id,
             }));
 
             loginSuccess();

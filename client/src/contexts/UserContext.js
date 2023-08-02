@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
         if (response.status !== 200) {
           parsed = {
             isLoggedIn: false,
+            id: '',
             username: '',
             token: '',
             profilePicture: '',
@@ -25,6 +26,7 @@ export const UserProvider = ({ children }) => {
     } else {
       return {
         isLoggedIn: false,
+        id: '',
         username: '',
         token: '',
         profilePicture: '',
@@ -42,12 +44,12 @@ export const UserProvider = ({ children }) => {
   const setToken = (token) => setUser({ ...user, token });
   const setProfilePicture = (profilePicture) => setUser({ ...user, profilePicture });
 
-  const login = (username, token, profilePicture) => {
-    setUser({ ...user, isLoggedIn: true, username, token, profilePicture });
+  const login = (username, token, profilePicture, id) => {
+    setUser({ ...user, isLoggedIn: true, username, token, profilePicture, id, });
   };
 
   const logout = () => {
-    setUser({ ...user, isLoggedIn: false, username: '', token: '', profilePicture: '' });
+    setUser({ ...user, isLoggedIn: false, username: '', token: '', profilePicture: '', id: '' });
   };
 
   return (

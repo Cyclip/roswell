@@ -17,7 +17,7 @@ export const createPost = async (type, title, content, image, token) => {
     const data = {
         type: type,
         title: title,
-        content: content,
+        body: content,
         image: image
     };
     
@@ -53,4 +53,27 @@ export const getPost = async (id) => {
     // get
 
     return postResponse;
+}
+
+export const likePost = async (id, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const response = await axios.post(`${BASE}/post/like/${id}`, {}, config)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}
+
+export const isLiked = (post, id) => {
+    return post.interactions.likes.includes(id);
 }

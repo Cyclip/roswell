@@ -10,10 +10,16 @@
     align-items: flex-start;
 }
 
+@media only screen and (max-width: 768px) {
+    .view_post {
+        flex-direction: column;
+        padding: 2rem 2rem;
+    }
+}
+
 .view_post_content {
     border: 1px solid red;
     flex: 2;
-    margin-right: 2rem;
     padding: 1rem;
     box-sizing: border-box;
     display: flex;
@@ -22,15 +28,28 @@
     gap: 2rem;
 }
 
+@media only screen and (max-width: 768px) {
+    .view_post_content {
+        flex-direction: column;
+        padding: 1rem 0;
+    }
+}
+
 .view_post-post {
     border: 1px solid red;
     flex: 2;
 
     background-color: var(--color-primary-dark-2);
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .view_post-sidebar {
     border: 1px solid orange;
     flex: 1;
+}
+
+@media only screen and (max-width: 768px) {
+    .view_post-sidebar {
+        margin-top: 2rem;
+    }
 }

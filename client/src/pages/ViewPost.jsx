@@ -4,6 +4,7 @@ import UserContext from "../contexts/UserContext";
 import "../styles/ViewPost.css"
 import { getPost } from "../services/post";
 import User from "../components/User";
+import LikePost from "../components/LikePost";
 
 /*
 Example post
@@ -55,17 +56,40 @@ const ViewPost = () => {
         fetchPost();
     }, [id, navigate]);
 
+    const postContents = (
+        <div className="view_post-post_header">
+            <User user={post?.author} />
+
+            <div className="view_post-post_header_content">
+                <h2>{post?.content.title}</h2>
+                <p>{post?.content.body}</p>
+            </div>
+
+            <div className="view_post-post_header_image">
+
+            </div>
+
+            <div className="view_post-post_header_interactions">
+                <LikePost
+                    post={post} 
+                    setPostInteractions={(interactions) => {
+                        setPost({
+                            ...post,
+                            interactions
+                        });
+                    }}
+                />
+            </div>
+        </div>
+    );
+
     return (
         <div className="view_post">
             <div className="view_post_content">
                 <div className="view_post-post">
                     <div className="view_post-post_contents">
                         {
-                            post && (
-                                <div className="view_post-post_header">
-                                    <User user={post?.author} />
-                                </div>
-                            )
+                            post && postContents
                         }
                     </div>
                 </div>

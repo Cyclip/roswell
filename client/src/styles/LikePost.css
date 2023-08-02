@@ -1,0 +1,18 @@
+@import "../App.css";
+
+.like_post {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    margin: 0 auto;
+    gap: 0.3rem;
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.2s ease-in-out;
+}
+
+.like_post.liked {
+    color: var(--color-text-accent2);
+}
