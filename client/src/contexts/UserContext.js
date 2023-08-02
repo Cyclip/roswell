@@ -3,19 +3,19 @@ import React, { createContext, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+    // const [user, setUser] = useState({
+    //     isLoggedIn: false,
+    //     username: '',
+    //     token: '',
+    //     profilePicture: '',
+    // });
+
     const [user, setUser] = useState({
         isLoggedIn: false,
-        username: '',
-        token: '',
-        profilePicture: '',
+        username: 'test',
+        token: 'test',
+        profilePicture: 'test',
     });
-
-    // const [user, setUser] = useState({
-    //     isLoggedIn: true,
-    //     username: 'test',
-    //     token: 'test',
-    //     profilePicture: 'test',
-    // });
     const setIsLoggedIn = (isLoggedIn) => setUser({ ...user, isLoggedIn: isLoggedIn })
     const setUsername = (username) => setUser({ ...user, username: username })
     const setToken = (token) => setUser({ ...user, token: token })

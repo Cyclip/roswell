@@ -15,8 +15,23 @@
   --color-text-accent2: #e85560;
   --color-text-accent3: #e50819;
 
+  --accent-blue: #36b5a6;
+  --accent-green: #2a9d8f;
+
+  /* buttons */
+  --color-btn-primary: #af444d;
+  --color-btn-primary-hover: #983840;
+  --color-btn-primary-active: #bb3f4a;
+  --color-btn-secondary: #2a9d8f;
+  --color-btn-secondary-hover: #269286;
+  --color-btn-secondary-active: #1e7e73;
+  --color-btn-tertiary: #eba2a7;
+  --color-btn-tertiary-hover: #e85560;
+  --color-btn-tertiary-active: #bb3f4a;
+
   /* font */
   --font-family: 'Nunito', sans-serif;
+  --font-family2: 'Montserrat-Alt1', sans-serif;
 }
 
 .App {
@@ -25,4 +40,113 @@
   min-height: 100vh;
   font-family: var(--font-family);
   margin: 0;
+}
+
+span.strikethrough {
+  text-decoration: line-through;
+}
+
+span.bold {
+  font-weight: bold;
+}
+
+span.italic {
+  font-style: italic;
+}
+
+span.underline {
+  text-decoration: underline;
+}
+
+span.highlight {
+  background-color: var(--color-accent1);
+}
+
+span.highlight2 {
+  background-color: var(--color-accent2);
+}
+
+span.accent {
+  color: var(--color-text-accent);
+}
+
+span.accent2 {
+  color: var(--color-text-accent2);
+}
+
+span.accent3 {
+  color: var(--accent-blue);
+}
+
+/* default button */
+button {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+button a {
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+/* primary button */
+button.btn-primary {
+  background-color: var(--color-btn-primary);
+  color: var(--color-text-light);
+}
+
+button.btn-primary:hover {
+  background-color: var(--color-btn-primary-hover);
+}
+
+button.btn-primary:active {
+  background-color: var(--color-btn-primary-active);
+}
+
+/* secondary button */
+button.btn-secondary {
+  background-color: var(--color-btn-secondary);
+  color: var(--color-text-light);
+}
+
+button.btn-secondary:hover {
+  background-color: var(--color-btn-secondary-hover);
+}
+
+button.btn-secondary:active {
+  background-color: var(--color-btn-secondary-active);
+}
+
+/* tertiary button */
+button.btn-tertiary {
+  background-color: var(--color-btn-tertiary);
+  color: var(--color-text-light);
+}
+
+button.btn-tertiary:hover {
+  background-color: var(--color-btn-tertiary-hover);
+}
+
+button.btn-tertiary:active {
+  background-color: var(--color-btn-tertiary-active);
 }
