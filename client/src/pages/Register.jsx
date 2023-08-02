@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import { register } from "../services/auth";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Loading from "../assets/loading.svg";
@@ -12,13 +13,18 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
 
     const { setUser } = useContext(UserContext);
 
     // check if user is logged in
     useEffect(() => {
         if (localStorage.getItem("user")) {
-            window.location.href = "/";
+            // check if user is logged in
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user.isLoggedIn) {
+                navigate("/feed");
+            }
         }
     })
 
@@ -40,11 +46,7 @@ const Register = () => {
 
     const registerSuccess = () => {
         toast.success("Registered successfully!");
-
-        // redirect to login page
-        setTimeout(() => {
-            window.location.href = "/login";
-        }, 1000);
+        navigate("/login");
     };
 
     return (

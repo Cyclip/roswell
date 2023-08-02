@@ -8,6 +8,7 @@ import React, {
 import UserContext from "../contexts/UserContext";
 import { createPost } from "../services/post";
 import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 import Loading from "../assets/loading.svg";
 
@@ -47,6 +48,8 @@ const NewPost = () => {
         }
     })
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isSubmitting) return;
@@ -64,7 +67,8 @@ const NewPost = () => {
 
         if (resp.success) {
             toast.success("Post created successfully");
-            window.location.href = resp.url;
+            // navigate to resp.url
+            navigate(resp.url);
         } else {
             toast.error(resp.message);
         }

@@ -4,6 +4,7 @@ import React, {
     useReducer,
     useEffect
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 import UserContext from "../contexts/UserContext";
 
@@ -22,6 +23,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [_, forceUpdate] = useReducer(x => x + 1, 0);
+    const navigate = useNavigate();
 
     // check if user is logged in
     useEffect(() => {
@@ -29,7 +31,7 @@ const Login = () => {
             // check if user is logged in
             const user = JSON.parse(localStorage.getItem("user"));
             if (user.isLoggedIn) {
-                window.location.href = "/feed";
+                navigate("/feed");
             }
         }
     })
@@ -86,15 +88,13 @@ const Login = () => {
     }
 
     const loginSuccess = () => {
-        toast.success(`Login successful! Redirecting..`, {
+        toast.success(`Login successful!`, {
             duration: 3000,
             position: 'bottom-right',
             icon: '✅',
         });
-
-        setTimeout(() => {
-            window.location.href = "/feed";
-        }, 1000);
+        
+        navigate("/feed");
     }
 
     const submitBtn = (
