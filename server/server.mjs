@@ -1,12 +1,16 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import "./loadenv.mjs";
 import "./db/conn.mjs";
 
 import authRouter from "./routes/authRoute.mjs";
 import postRouter from "./routes/postRoute.mjs";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const PORT = process.env.PORT || 5050;
 const app = express();
 
