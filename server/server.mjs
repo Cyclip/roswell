@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 import "./loadenv.mjs";
 import "./db/conn.mjs";
 
@@ -13,8 +14,16 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, "../client/build")));
+
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
+
+// Catch-all route to serve the React app's index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
