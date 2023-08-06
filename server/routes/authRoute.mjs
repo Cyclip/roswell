@@ -137,7 +137,7 @@ router.post("/checkToken", async (req, res) => {
         const { username, token } = req.body;
 
         // Check if user exists
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username: username });
 
         if (user) {
             // Check if token is valid
@@ -150,6 +150,8 @@ router.post("/checkToken", async (req, res) => {
                 });
             }
         }
+
+        console.log("checkToken", username, user, token);
 
         return res.status(400).json({
             success: false,

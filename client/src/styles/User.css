@@ -3,7 +3,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: left;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     gap: 0.5rem;
     text-decoration: none;
     color: var(--text-color);

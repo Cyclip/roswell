@@ -1,7 +1,16 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { checkToken } from '../services/auth';
+import { toast } from 'react-hot-toast';
 
 export const UserContext = createContext();
+
+const defaultUser = {
+  isLoggedIn: false,
+  id: '',
+  username: '',
+  token: '',
+  profilePicture: '',
+}
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -9,31 +18,22 @@ export const UserProvider = ({ children }) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       let parsed = JSON.parse(storedUser);
-      // Check if token is valid
-      checkToken(parsed.username, parsed.token).then((response) => {
-        if (response.status !== 200) {
-          parsed = {
-            isLoggedIn: false,
-            id: '',
-            username: '',
-            token: '',
-            profilePicture: '',
-          };
+      if (!parsed.isLoggedIn) {
+        parsed = defaultUser;
+      } else {
+        // Check if token is valid
+        checkToken(parsed.username, parsed.token).then((response) => {
+          if (!response.success) {
+            parsed = defaultUser;
 
-          // Remove invalid token from local storage
-          localStorage.removeItem('user');
-        }
-      });
+            toast.error("Your session has expired. Please log in again.");
+          }
+        });
+      }
 
       return parsed;
     } else {
-      return {
-        isLoggedIn: false,
-        id: '',
-        username: '',
-        token: '',
-        profilePicture: '',
-      };
+      return defaultUser;
     }
   });
 

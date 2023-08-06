@@ -18,3 +18,23 @@ export function authenticationMiddleware(req, res, next) {
         return res.status(401).json({ message: 'Authentication failed' });
     }
 }
+
+
+// soft authentication
+export function softAuthenticationMiddleware(req, res, next) {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+        return next();
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
+    }
+    catch (err) {
+        console.log("token", token, err);
+        return next();
+    }
+}

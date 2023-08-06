@@ -2,17 +2,7 @@ import axios from 'axios';
 
 const BASE = process.env.REACT_APP_BASE_API;
 
-/*
-body example:
-{
-    "type": "Content",
-    "title": "Post Title",
-    "content": "Post Content"
-    "image": "Post Image"
-}
 
-You should additionally pass the token in the Authorization header
-*/
 export const createPost = async (type, title, content, image, token) => {
     const data = {
         type: type,
@@ -105,6 +95,45 @@ export const isSaved = async (post, token) => {
     };
 
     const response = await axios.post(`${BASE}/post/isSaved/${post}`, {}, config)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}
+
+export const submitComment = async (id, comment, token) => {
+    const data = {
+        comment: comment,
+        postId: id
+    };
+    
+    // include token in the header
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const response = await axios.post(`${BASE}/comment/create`, data, config)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}
+
+
+export const getComments = async (id, page, limit) => {
+    const response = await axios.get(`${BASE}/comment/get/${id}?page=${page || 1}&limit=${limit || 10}`)
     .then((response) => {
         return response.data;
     })

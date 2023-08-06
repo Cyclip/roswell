@@ -8,6 +8,7 @@ import "./db/conn.mjs";
 
 import authRouter from "./routes/authRoute.mjs";
 import postRouter from "./routes/postRoute.mjs";
+import commentRouter from "./routes/commentRoute.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
+app.use("/comment", commentRouter);
 
 // Catch-all route to serve the React app's index.html
 app.get("*", (req, res) => {

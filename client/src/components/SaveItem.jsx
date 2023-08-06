@@ -9,14 +9,14 @@ import "../styles/SavePost.css"
 import { toast } from "react-hot-toast";
 import { useMediaQuery } from 'react-responsive'
 
-const SavePost = ({ post }) => {
+const SaveItem = ({ post }) => {
     const { user } = useContext(UserContext);
     const [saves, setSaves] = useState(post.interactions.saves || 0);
     const [saved, setSaved] = useState(false);
     const isMobile = useMediaQuery({ query: '(max-width: 468px)' })
 
     const updateSaved = async () => {
-        if (!user) return;
+        if (!user.isLoggedIn) return;
         isSaved(post.id, user.token).then(resp => {
             if (resp.success) {
                 setSaved(resp.saved);
@@ -72,4 +72,4 @@ const SavePost = ({ post }) => {
     );
 }
 
-export default SavePost;
+export default SaveItem;

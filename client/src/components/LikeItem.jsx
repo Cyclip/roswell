@@ -7,7 +7,7 @@ import { isLiked } from "../services/post";
 import { toast } from "react-hot-toast";
 import { useMediaQuery } from 'react-responsive'
 
-const LikePost = ({ post, setPostInteractions }) => {
+const LikeItem = ({ post, setPostInteractions }) => {
     const { user } = useContext(UserContext);
     const isMobile = useMediaQuery({ query: '(max-width: 468px)' })
 
@@ -22,7 +22,8 @@ const LikePost = ({ post, setPostInteractions }) => {
     }, [user, post]);
 
     const handleLike = async () => {
-        if (!user) return;
+        if (!user.isLoggedIn) return;
+
         const resp = await likePost(post.id, user.token);
         if (resp.success) {
             setPostInteractions(resp.postInteractions);
@@ -53,4 +54,4 @@ const LikePost = ({ post, setPostInteractions }) => {
     );
 }
 
-export default LikePost;
+export default LikeItem;
