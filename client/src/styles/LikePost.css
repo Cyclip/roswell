@@ -16,3 +16,14 @@
 .like_post.liked {
     color: var(--color-text-accent2);
 }
+
+@media only screen and (max-width: 500px) {
+    .like_post {
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+
+    .like_post .like_post-count {
+        font-size: 0.7rem;
+    }
+}

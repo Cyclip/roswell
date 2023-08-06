@@ -5,9 +5,11 @@ import { GoHeartFill } from "react-icons/go";
 import "../styles/LikePost.css"
 import { isLiked } from "../services/post";
 import { toast } from "react-hot-toast";
+import { useMediaQuery } from 'react-responsive'
 
 const LikePost = ({ post, setPostInteractions }) => {
     const { user } = useContext(UserContext);
+    const isMobile = useMediaQuery({ query: '(max-width: 468px)' })
 
     const [liked, setLiked] = useState(
         false
@@ -43,7 +45,9 @@ const LikePost = ({ post, setPostInteractions }) => {
                 onClick={handleLike}
             />
             <div className="like_post-count">
-                {post.interactions.likes.length} {post.interactions.likes.length === 1 ? " like" : " likes"}
+                {post.interactions.likes.length} {
+                    isMobile ? "" : post.interactions.likes.length === 1 ? " like" : " likes"
+                }
             </div>
         </div>
     );

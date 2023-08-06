@@ -7,11 +7,13 @@ import {
 } from "react-icons/bs";
 import "../styles/SavePost.css"
 import { toast } from "react-hot-toast";
+import { useMediaQuery } from 'react-responsive'
 
 const SavePost = ({ post }) => {
     const { user } = useContext(UserContext);
     const [saves, setSaves] = useState(post.interactions.saves || 0);
     const [saved, setSaved] = useState(false);
+    const isMobile = useMediaQuery({ query: '(max-width: 468px)' })
 
     const updateSaved = async () => {
         if (!user) return;
@@ -62,7 +64,9 @@ const SavePost = ({ post }) => {
                     />
             }
             <div className="save_post-count">
-                {saves} {saves === 1 ? " save" : " saves"}
+                {saves} {
+                    isMobile ? "" : saves === 1 ? " save" : " saves"
+                }
             </div>
         </div>
     );

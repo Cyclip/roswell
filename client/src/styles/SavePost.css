@@ -16,3 +16,15 @@
 .save_post.saved {
     color: var(--color-text-accent2);
 }
+
+@media only screen and (max-width: 500px) {
+    .save_post {
+        flex-direction: column;
+        gap: 0;
+        gap: 0.1rem;
+    }
+
+    .save_post .save_post-count {
+        font-size: 0.7rem;
+    }
+}
