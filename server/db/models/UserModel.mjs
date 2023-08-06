@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { isEmail, isUsername, isPassword } from "../../utils/auth.mjs";
 
-const DEFAULT_PFP = 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg';
+const DEFAULT_PFP = '';
 
 const UserSchema = new Schema({
     // Unique username of the user

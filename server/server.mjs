@@ -16,7 +16,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
+// static files
+app.use(express.static("public"));
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "../client/build")));
@@ -28,6 +30,7 @@ app.use("/post", postRouter);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

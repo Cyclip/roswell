@@ -7,6 +7,7 @@ import User from "../components/User";
 import LikePost from "../components/LikePost";
 import CommentCount from "../components/CommentCount";
 import SavePost from "../components/SavePost";
+import AddComment from "../components/AddComment";
 
 /*
 Example post
@@ -60,7 +61,7 @@ const ViewPost = () => {
 
     const postContents = (
         <div className="view_post-post_header">
-            <User user={post?.author} />
+            <User user={post?.author} displayName={true} />
 
             <div className="view_post-post_header_content">
                 <h2>{post?.content.title}</h2>
@@ -96,6 +97,12 @@ const ViewPost = () => {
                     <div className="view_post-post_contents">
                         {
                             post && postContents
+                        }
+                    </div>
+
+                    <div className="view_post-post_comments">
+                        {
+                            post && <AddComment post={post} />
                         }
                     </div>
                 </div>

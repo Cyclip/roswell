@@ -6,19 +6,27 @@ import {
     MdAdminPanelSettings
 } from "react-icons/md";
 
-const User = ({ user }) => {
+const DEFAULT_PFP = "/images/pfp.png";
+
+const User = ({ user, displayName }) => {
     return (
         <Link to={`/user/${user.username}`} className="user">
             <div className="user_profile_picture">
-                <img src={user.profilePicture} alt="profile_picture" />
+                <img src={
+                    user.profilePicture ? user.profilePicture : DEFAULT_PFP
+                } alt="profile_picture" />
             </div>
-            <div className={
-                "user_username" + (user.role === "admin" ? " user_admin" : "")
-            }>
-                {user.username} {
-                    user.role === "admin" ? <MdAdminPanelSettings className="user_admin"/> : null
-                }
-            </div>
+            {
+                displayName ? (
+                    <div className={
+                        "user_username" + (user.role === "admin" ? " user_admin" : "")
+                    }>
+                        {user.username} {
+                            user.role === "admin" ? <MdAdminPanelSettings className="user_admin"/> : null
+                        }
+                    </div>
+                ) : null
+            }
         </Link>
     );
 }
