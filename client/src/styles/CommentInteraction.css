@@ -1,8 +1,9 @@
 @import "../App.css";
 
-.like_comment {
+.comment_interaction {
     display: flex;
     justify-content: left;
+    flex-direction: row;
     align-items: center;
     gap: 0.25rem;
     cursor: pointer;
@@ -11,10 +12,15 @@
         opacity 0.2s ease;
 }
 
-.like_comment:hover {
+.comment_interaction:hover {
     opacity: 1;
 }
 
-.like_comment.liked {
+.comment_interaction.liked {
     color: var(--color-text-accent2);
+}
+
+.report-interaction {
+    color: var(--color-text-accent);
+    opacity: 0.5;
 }

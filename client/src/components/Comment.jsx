@@ -4,6 +4,8 @@ import UserContext from "../contexts/UserContext";
 import User from "./User";
 import { timeDifference } from "../utils/timeUtils";
 import LikeComment from "./LikeComment";
+import Reply from "./Reply";
+import Report from "./Report";
 
 import "../styles/Comment.css"
 import { isLiked } from "../services/comment";
@@ -13,7 +15,17 @@ const Comment = ({ comment }) => {
     const navigate = useNavigate();
     const [likes, setLikes] = useState(comment.likes);
 
-    console.log("comment loaded", comment);
+    const handleReply = () => {
+        if (!user.isLoggedIn) {
+            navigate("/login");
+        } else {
+            navigate(`/post/${comment.postId}?replyTo=${comment._id}`);
+        }
+    }
+
+    const handleReport = () => {
+
+    }
 
     return (
         <div className="comment">
@@ -28,10 +40,20 @@ const Comment = ({ comment }) => {
             </div>
             <p className="comment-content">{comment.body}</p>
             <div className="comment-interactions">
-                <LikeComment
-                    comment={comment}
-                    likes={likes}
-                    setLikes={setLikes}
+                <div className="left">
+                    <LikeComment
+                        comment={comment}
+                        likes={likes}
+                        setLikes={setLikes}
+                    />
+
+                    <Reply
+                        handleReply={handleReply}
+                    />
+                </div>
+
+                <Report
+                    handleReport={handleReport}
                 />
 
             </div>

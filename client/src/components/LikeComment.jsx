@@ -33,15 +33,15 @@ const LikeComment = ({ comment, likes, setLikes }) => {
     return (
         <div
             className={
-                "like_comment" +
+                "comment_interaction" +
                 (isLiked() ? " liked" : "")
             }
             onClick={handleLike}
         >
             <GoHeartFill
-                className="like_comment-icon"
+                className="comment_interaction-icon"
             />
-            <div className="like_comment-count">
+            <div className="comment_interaction-count">
                 {likes?.length} {
                     isMobile ? "" : likes?.length === 1 ? " like" : " likes"
                 }
