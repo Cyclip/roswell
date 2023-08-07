@@ -36,6 +36,13 @@ const CommentSchema = new Schema({
         ref: 'Comment',
         select: false,
     }],
+    // the parent comment, null if it is a top level comment
+    parentComment: {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+        default: null,
+        select: false,
+    },
     // Date the comment was created
     createdAt: {
         type: Date,

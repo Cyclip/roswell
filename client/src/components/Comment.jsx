@@ -6,26 +6,31 @@ import { timeDifference } from "../utils/timeUtils";
 import LikeComment from "./LikeComment";
 import Reply from "./Reply";
 import Report from "./Report";
+import AddComment from "./AddComment";
 
 import "../styles/Comment.css"
-import { isLiked } from "../services/comment";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, depth }) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const [likes, setLikes] = useState(comment.likes);
+    const [isReplying, setIsReplying] = useState(false);
+
+    // default depth to 0
+    depth = depth || 0;
 
     const handleReply = () => {
         if (!user.isLoggedIn) {
             navigate("/login");
         } else {
-            navigate(`/post/${comment.postId}?replyTo=${comment._id}`);
+            setIsReplying(!isReplying);
         }
     }
 
-    const handleReport = () => {
+    const handleReport = () => {}
 
-    }
+    const submitReply = (reply) => {}
+    const addReply = (reply) => {}
 
     return (
         <div className="comment">
@@ -47,15 +52,33 @@ const Comment = ({ comment }) => {
                         setLikes={setLikes}
                     />
 
-                    <Reply
-                        handleReply={handleReply}
-                    />
+                    <div style={{
+                        color: isReplying ? "var(--accent-blue)" : "inherit"
+                    }}>
+                        <Reply
+                            handleReply={handleReply}
+                        />
+                    </div>
                 </div>
 
                 <Report
                     handleReport={handleReport}
                 />
 
+            </div>
+
+            <div className="comment-reply-to">
+                {
+                    isReplying && (
+                        <AddComment
+                            submitCommentProp={submitReply}
+                            addComment={addReply}
+                            canCancel={true}
+                            onCancel={handleReply}
+                            placeholder={`Reply to ${comment.user.username}`}
+                        />
+                    )
+                }
             </div>
         </div>
     )

@@ -47,7 +47,7 @@
     border-bottom-right-radius: 5px;
 }
 
-button.add-comment-post {
+.add-comment-options button {
     font-size: 0.8rem;
     font-weight: 600;
 }

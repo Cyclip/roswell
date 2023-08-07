@@ -153,8 +153,7 @@ const ViewPost = () => {
 
                     <div className="view_post-post_comments">
                         {
-                            post && <AddComment 
-                                post={post}
+                            post && <AddComment
                                 submitCommentProp={submitComment_}
                                 addComment={addComment}
                             />

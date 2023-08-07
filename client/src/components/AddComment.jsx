@@ -8,13 +8,16 @@ import Textarea from 'react-expanding-textarea'
 import { useMediaQuery } from 'react-responsive'
 import { toast } from 'react-hot-toast';
 
-const AddComment = ({ post, submitCommentProp, addComment }) => {
+const AddComment = ({ submitCommentProp, addComment, canCancel, onCancel, placeholder }) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const [comment, setComment] = useState("");
     const textareaRef = useRef(null);
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
     const [isPosting, setIsPosting] = useState(false);
+
+    canCancel = canCancel || false;
+    placeholder = placeholder || "Add a comment...";
 
     const submitComment = () => {
         if (isPosting) return;
@@ -74,7 +77,7 @@ const AddComment = ({ post, submitCommentProp, addComment }) => {
                 <div className="add-comment-text">
                     <Textarea
                         className="add-comment-textarea"
-                        placeholder="Add a comment..."
+                        placeholder={placeholder}
                         value={comment}
                         onChange={(e) => updateComment(e.target.value)}
                         ref={textareaRef}
@@ -87,6 +90,15 @@ const AddComment = ({ post, submitCommentProp, addComment }) => {
                         </div>
 
                         <div className="add-comment-options-right">
+                            {
+                                canCancel && (
+                                    <button
+                                        className="add-comment-cancel btn-transparent"
+                                        onClick={onCancel}
+                                    > Cancel </button>
+                                )
+                            }
+
                             <button
                                 className="add-comment-post btn-primary"
                                 onClick={submitComment}
