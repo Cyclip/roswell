@@ -1,0 +1,61 @@
+import express from "express";
+import { authenticationMiddleware, softAuthenticationMiddleware } from "../middleware/authMiddleware.mjs";
+import CommentModel from '../db/models/CommentModel.mjs';
+import PostInteractionsModel from '../db/models/PostInteractionsModel.mjs';
+import PostModel from '../db/models/PostModel.mjs';
+import UserModel from '../db/models/UserModel.mjs';
+
+const router = express.Router();
+
+
+// ==================== ROUTES ====================
+// reply to a comment route
+router.post("/create", authenticationMiddleware, async (req, res) => {
+    try {
+        // get user
+        const userId = req.user.id;
+
+        // get the body from the request
+        const postId = req.body.postId;
+        const parentCommentId = req.body.parentCommentId;
+        const reply = req.body.reply;
+
+        // get the parent comment
+        // const parentComment = await CommentModel.findOne({ _id: parentCommentId }).select('replies');
+        // if (!parentComment) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         error: 'Parent comment does not exist'
+        //     });
+        // }
+
+        // create the reply
+        const replyModel = await CommentModel.create({
+            post: postId,
+            user: userId,
+            body: reply,
+            likes: [],
+            replies: [],
+            parentComment: parentCommentId
+        });
+
+        // save all
+        await replyModel.save();
+        await CommentModel.updateOne({ _id: parentCommentId }, { $push: { replies: replyModel._id } });
+
+        // return the reply
+        return res.status(200).json({
+            success: true,
+            reply: replyModel
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Server error'
+        });
+    }
+});
+
+// ==================== EXPORT ====================
+export default router;

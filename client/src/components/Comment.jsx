@@ -7,6 +7,7 @@ import LikeComment from "./LikeComment";
 import Reply from "./Reply";
 import Report from "./Report";
 import AddComment from "./AddComment";
+import { replyToComment } from "../services/reply";
 
 import "../styles/Comment.css"
 
@@ -29,7 +30,16 @@ const Comment = ({ comment, depth }) => {
 
     const handleReport = () => {}
 
-    const submitReply = (reply) => {}
+    const submitReply = (reply) => {
+        // reply to the comment and return a promise
+        return replyToComment(
+            comment.post,
+            comment._id,
+            reply,
+            user.token
+        );
+    }
+
     const addReply = (reply) => {}
 
     return (
