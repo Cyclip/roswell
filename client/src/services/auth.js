@@ -50,7 +50,5 @@ export const checkToken = async (username, token) => {
         return error.response;
     });
 
-    console.log("checkToken", response);
-
     return response.data;
 }

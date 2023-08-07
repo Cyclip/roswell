@@ -53,3 +53,12 @@
 .comment .comment-content {
     margin: 0 2.5rem;
 }
+
+.comment .comment-interactions {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+}

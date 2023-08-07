@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import "../styles/ViewPost.css"
-import { getPost, submitComment, getComments } from "../services/post";
+import { getPost } from "../services/post";
+import { submitComment, getComments } from "../services/comment";
 import User from "../components/User";
 import LikeItem from "../components/LikeItem";
 import CommentCount from "../components/CommentCount";
@@ -168,8 +169,8 @@ const ViewPost = () => {
                                 */
                                 comments === null ? commentsLoading : (
                                     comments.length === 0 ? noComments : (
-                                        comments.map((comment) => (
-                                            <Comment comment={comment} />
+                                        comments.map((comment, idx) => (
+                                            <Comment comment={comment} key={idx}/>
                                         ))
                                     )
                                 )

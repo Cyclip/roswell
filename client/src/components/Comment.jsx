@@ -3,12 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import User from "./User";
 import { timeDifference } from "../utils/timeUtils";
+import LikeComment from "./LikeComment";
 
 import "../styles/Comment.css"
+import { isLiked } from "../services/comment";
 
 const Comment = ({ comment }) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
+    const [likes, setLikes] = useState(comment.likes);
+
+    console.log("comment loaded", comment);
 
     return (
         <div className="comment">
@@ -23,6 +28,11 @@ const Comment = ({ comment }) => {
             </div>
             <p className="comment-content">{comment.body}</p>
             <div className="comment-interactions">
+                <LikeComment
+                    comment={comment}
+                    likes={likes}
+                    setLikes={setLikes}
+                />
 
             </div>
         </div>

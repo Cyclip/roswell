@@ -151,8 +151,6 @@ router.post("/checkToken", async (req, res) => {
             }
         }
 
-        console.log("checkToken", username, user, token);
-
         return res.status(400).json({
             success: false,
             error: 'Token is invalid'

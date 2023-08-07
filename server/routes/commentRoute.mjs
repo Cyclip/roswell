@@ -139,5 +139,87 @@ router.get("/get/:postId", softAuthenticationMiddleware, async (req, res) => {
     }
 });
 
+
+// toggle a comment
+router.post("/like/:id", authenticationMiddleware, async (req, res) => {
+    const commentId = req.params.id;
+
+    try {
+        // get user (guaranteed to exist due to middleware)
+        // + im lazy
+        const userId = req.user.id;
+        const userModel = await UserModel.findOne({ _id: userId });
+        const element = { userId, username: userModel.username };
+        console.log("toggling", element);
+
+        await CommentModel.updateOne(
+            { _id: commentId },
+            [
+                {
+                    $set: {
+                        likes: {
+                            $cond: [
+                                {
+                                    $in: [element, "$likes"]
+                                },
+                                {
+                                    $setDifference: ["$likes", [element]]
+                                },
+                                {
+                                    $concatArrays: ["$likes", [element]]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        )
+
+        const commentModel = await CommentModel.findOne({ _id: commentId });
+        const likes = commentModel.likes;
+
+        // Return new number of likes
+        return res.status(200).json({
+            success: true,
+            likes,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+})
+
+
+// if post is liked by user
+// like a comment
+router.get("/isLiked/:id", authenticationMiddleware, async (req, res) => {
+    const commentId = req.params.id;
+
+    try {
+        // get user (guaranteed to exist due to middleware)
+        // + im lazy
+        const userId = req.user.id;
+
+        const commentModel = await CommentModel.findOne({ _id: commentId });
+        const isLiked = commentModel.likes.includes(userId)
+
+        // Return new number of likes
+        return res.status(200).json({
+            success: true,
+            isLiked: isLiked,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+})
+
+
 // ==================== EXPORT ====================
 export default router;

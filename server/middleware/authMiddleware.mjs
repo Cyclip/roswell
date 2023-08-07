@@ -14,7 +14,6 @@ export function authenticationMiddleware(req, res, next) {
         next();
     }
     catch (err) {
-        console.log("token", token, err);
         return res.status(401).json({ message: 'Authentication failed' });
     }
 }
@@ -34,7 +33,6 @@ export function softAuthenticationMiddleware(req, res, next) {
         next();
     }
     catch (err) {
-        console.log("token", token, err);
         return next();
     }
 }

@@ -21,10 +21,15 @@ const CommentSchema = new Schema({
         maxlength: [1000, 'Body must be less than 1000 characters long']
     },
     // All likes
-    likes: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
+    likes: [
+        {
+            userId: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            username: String
+        }
+    ],
     // All replies
     replies: [{
         type: Schema.Types.ObjectId,

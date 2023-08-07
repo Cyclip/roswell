@@ -1,0 +1,20 @@
+@import "../App.css";
+
+.like_comment {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.like_comment:hover {
+    opacity: 1;
+}
+
+.like_comment.liked {
+    color: var(--color-text-accent2);
+}
