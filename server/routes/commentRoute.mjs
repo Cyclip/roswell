@@ -94,7 +94,7 @@ router.get("/get/:postId", softAuthenticationMiddleware, async (req, res) => {
     const userId = req.user?.id;
 
     try {
-        // Get the post first
+        // get the post
         const post = await PostModel.findOne({ _id: postId });
         if (!post) {
             return res.status(400).json({
@@ -102,34 +102,28 @@ router.get("/get/:postId", softAuthenticationMiddleware, async (req, res) => {
                 error: 'Post does not exist'
             });
         }
-        
-        // Get the interactions model (foreign key)
+        // get the interactions model (foreign key)
         const postInteractionsId = post.interactions;
         const postInteractions = await PostInteractionsModel.findOne({ _id: postInteractionsId });
         if (!postInteractions) {
             return res.status(400).json({
                 success: false,
-                error: 'Post interactions do not exist'
+                error: 'Post interactions does not exist'
             });
         }
-        
-        // Get comments
-        const comments = await CommentModel.find({ _id: { $in: postInteractions.comments } })
-        .populate('user', 'username profilePicture')
-        .populate('likes', 'username')
-        .populate('replies', 'user body likes createdAt')
-        .exec();
 
-        // Sort comments: User's comments first, then others based on likes
-        comments.sort((a, b) => {
-            if (userId && a.user._id.toString() === userId) {
-                return -1; // User's comment comes first
-            } else if (userId && b.user._id.toString() === userId) {
-                return 1; // User's comment comes first
-            } else {
-                return b.likes.length - a.likes.length; // Sort by likes (descending order)
-            }
-        });
+        // get comments sorted by number of likes frmo PostInteractionsModel
+        // (likes is an array of user ids)
+        const commmentsIds = postInteractions.comments;
+        const comments = await CommentModel.find({ _id: { $in: commmentsIds } })
+            .sort({ likes: -1 })
+            .skip(skip)
+            .limit(limit)
+            // include user, user profile, and likes
+            .populate('user', 'username profilePicture')
+            .populate('likes', 'username')
+            .populate('replies', 'user body likes createdAt')
+            .exec();
         
         // Return comments
         return res.status(200).json({

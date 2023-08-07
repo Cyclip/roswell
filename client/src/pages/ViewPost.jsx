@@ -49,11 +49,23 @@ const ViewPost = () => {
     const [comments, setComments] = useState(null);
 
     const loadComments = async () => {
-        const resp = await getComments(id);
-        console.log("comments", resp);
+        const resp = await getComments(id, 1, 100);
         if (resp.success) {
-            setComments(resp.data || []);
+            let comments = moveComments(resp.data || [])
+            setComments(comments);
+            console.log(comments);
         }
+    }
+
+    const moveComments = (comments) => {
+        if (!user.isLoggedIn) return comments;
+        // comments are already sorted by likes
+        // we want to move comments that are by the user to the top
+        return comments.sort((a, b) => {
+            if (a.user.id === user.id) return -1;
+            if (b.user.id === user.id) return 1;
+            return 0;
+        });
     }
 
     useEffect(() => {
