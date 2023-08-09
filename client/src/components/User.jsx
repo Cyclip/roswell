@@ -1,20 +1,21 @@
 import React from "react";
 import "../styles/User.css"
 import { Link } from "react-router-dom";
-
+import DefaultPfp from "../assets/pfp.png";
 import {
     MdAdminPanelSettings
 } from "react-icons/md";
-
-const DEFAULT_PFP = "/images/pfp.png";
 
 const User = ({ user, displayName }) => {
     return (
         <Link to={`/user/${user.username}`} className="user">
             <div className="user_profile_picture">
-                <img src={
-                    user.profilePicture ? user.profilePicture : DEFAULT_PFP
-                } alt="profile_picture" />
+                <img src={user.profilePicture} alt="profile_picture"
+                    // fall back to default pfp if no profile picture
+                    onError={(e) => {
+                        e.target.src = DefaultPfp;
+                    }}
+                />
             </div>
             {
                 displayName ? (

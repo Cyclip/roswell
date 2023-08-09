@@ -53,25 +53,19 @@ const Login = () => {
 
         // if success
         if (resp.success) {
-            setUser((prevUser) => {
-                return {
-                    ...prevUser,
-                    isLoggedIn: true,
-                    username: username,
-                    token: resp.token,
-                    profilePicture: null,
-                    id: resp.id,
-                }
-            });
+            const newUser = {
+                isLoggedIn: true,
+                username: resp.user.username,
+                token: resp.token,
+                profilePicture: resp.user.profilePicture,
+                id: resp.user.id,
+                email: resp.user.email,
+            };
+            
+            setUser(newUser);
 
             // set localstorage
-            localStorage.setItem("user", JSON.stringify({
-                isLoggedIn: true,
-                username: username,
-                token: resp.token,
-                profilePicture: null,
-                id: resp.id,
-            }));
+            localStorage.setItem("user", JSON.stringify(newUser));
 
             loginSuccess();
         } else {

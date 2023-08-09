@@ -10,6 +10,7 @@ const defaultUser = {
   username: '',
   token: '',
   profilePicture: '',
+  email: '',
 }
 
 export const UserProvider = ({ children }) => {
