@@ -40,6 +40,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    margin-top: 3rem;
 }
 
 .view_post h2 {
@@ -66,6 +67,23 @@
     align-items: center;
     flex-direction: column;
     margin-bottom: 10px;
+    opacity: 0.5;
+    margin: 2rem 0;
+    margin-top: 4rem;
+}
+
+.view_post-post_comments_info h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0;
+}
+
+.view_post-post_comments_info p {
+    color: var(--text-color);
+    font-weight: 100;
+    line-height: 1.5;
+    margin: 1rem 0;
 }
 
 .view_post-post_comments_info img {

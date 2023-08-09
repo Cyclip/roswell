@@ -135,7 +135,10 @@ const ViewPost = () => {
 
     const noComments = (
         <div className="view_post-post_comments_info">
-            
+            <h2>No comments yet</h2>
+            <p>
+                Be the first to comment on this post!
+            </p>
         </div>
     )
 

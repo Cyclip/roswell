@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import User from "./User";
 import { timeDifference } from "../utils/timeUtils";
 import LikeComment from "./LikeComment";
 import Reply from "./Reply";
-import Report from "./Report";
 import AddComment from "./AddComment";
 import { replyToComment, getReplies } from "../services/reply";
-import { likeComment, getComment } from "../services/comment";
+import { likeComment } from "../services/comment";
 import { toast } from "react-hot-toast";
 
 import "../styles/Comment.css"
@@ -35,7 +34,6 @@ const Comment = ({ comment, depth }) => {
     const loadReplies = async () => {
         const resp = await getReplies(comment._id);
         if (resp.success) {
-            console.log("loading", resp.data, "for comment", comment.body);
             setReplies(resp.data || []);
         }
     }
@@ -65,6 +63,11 @@ const Comment = ({ comment, depth }) => {
     // add reply to replies to top
     const addReply = (reply) => {
         setReplies([reply, ...replies]);
+        setShowReplyBox(false);
+        // force replies to be shown
+        if (!showReplies) {
+            toggleReplies();
+        }
     }
 
     // toggle reply box
@@ -79,7 +82,6 @@ const Comment = ({ comment, depth }) => {
     // toggle replies
     const toggleReplies = async () => {
         // if replies haven't been loaded yet, load them
-        console.log("replies have " + (repliesLoaded ? "" : "not ") + "been loaded for", comment.body);
         if (!repliesLoaded) {
             // load replies for each of the comments
             await loadReplies();
@@ -108,10 +110,8 @@ const Comment = ({ comment, depth }) => {
     // report comment
     const handleReport = () => {}
 
-    console.log("comment", comment.body, "has replies", replies, "and is depth", depth);
-
     return (
-        <div className="comment" style={{ marginLeft: depth * 15 }}>
+        <div className="comment">
             <div className="comment-header">
                 <div className="comment-author">
                     <User user={comment.user} displayName={true} />
@@ -136,12 +136,6 @@ const Comment = ({ comment, depth }) => {
                             handleReply={toggleReplyBox}
                         />
                     </div>
-                </div>
-
-                <div className="right">
-                    <Report 
-                        handleReport={handleReport}
-                    />
                 </div>
             </div>
 

@@ -48,7 +48,8 @@ const UserSchema = new Schema({
     role: {
         type: String,
         enum: ['user', 'admin'],
-        default: 'user'
+        default: 'user',
+        select: true,
     },
     // User's profile picture
     profilePicture: {
