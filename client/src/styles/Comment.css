@@ -1,3 +1,5 @@
+@import "../App.css";
+
 .comment {
     position: relative;
     padding: 1rem;
@@ -8,6 +10,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    z-index: 1;
 }
 
 /* vertical line on the left */
@@ -102,6 +105,25 @@
     cursor: pointer;
     font-size: 0.8rem;
     opacity: 0.5;
+}
+
+.comment-options {
+    position: relative;
+}
+
+.comment-options-dropdown {
+    position: absolute;
+    top: 1rem;
+    right: 3.5rem;
+    background-color: var(--color-primary-dark-3);
+    border-radius: 5px;
+    padding: 0.2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 100;
 }
 
 /* responsiveness */

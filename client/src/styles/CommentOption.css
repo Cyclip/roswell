@@ -1,21 +1,29 @@
 @import "../App.css";
 
-.comment_interaction {
+.comment_option {
     display: flex;
     justify-content: left;
     flex-direction: row;
     align-items: center;
     gap: 0.25rem;
+    padding: 0.5rem;
     cursor: pointer;
+    font-size: 0.9rem;
+    z-index: 100;
     opacity: 0.8;
     transition: color 0.2s ease,
         opacity 0.2s ease;
 }
 
-.comment_interaction:hover {
+.comment_option:hover {
     opacity: 1;
 }
 
-.comment_interaction.liked {
+.comment_option.report {
+    color: var(--color-text-accent);
+    opacity: 1;
+}
+
+.comment_option.report:hover {
     color: var(--color-text-accent2);
 }

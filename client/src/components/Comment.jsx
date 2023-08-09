@@ -5,6 +5,8 @@ import User from "./User";
 import { timeDifference } from "../utils/timeUtils";
 import LikeComment from "./LikeComment";
 import Reply from "./Reply";
+import Report from "./Report";
+import Delete from "./Delete";
 import AddComment from "./AddComment";
 import { replyToComment, getReplies } from "../services/reply";
 import { likeComment } from "../services/comment";
@@ -26,7 +28,10 @@ const Comment = ({ comment, depth }) => {
     const [showReplyBox, setShowReplyBox] = useState(false);
     // have the replies been loaded?
     const [repliesLoaded, setRepliesLoaded] = useState(false);
+    // options dropdown open?
+    const [optionsOpen, setOptionsOpen] = useState(false);
 
+    const userOwnsComment = user.isLoggedIn && user.id === comment.user._id;
     // default depth to 0
     depth = depth || 0;
 
@@ -107,11 +112,32 @@ const Comment = ({ comment, depth }) => {
         }
     }
 
-    // report comment
     const handleReport = () => {}
+    const handleDelete = () => {}
+
+    const optionsDropdown = (
+        <div className="comment-options-dropdown">
+            {
+                userOwnsComment && (
+                    <Delete handleDelete={handleDelete} />
+                )
+            }
+            <Report handleReport={handleReport} />
+        </div>
+    );
+
+    const closeOptions = (e) => {
+        if (e.target.className !== "comment-options-button btn-transparent") {
+            setOptionsOpen(false);
+        }
+    }
 
     return (
-        <div className="comment">
+        <div className="comment"
+            onClick={closeOptions}
+        >
+            { optionsOpen && optionsDropdown }
+            
             <div className="comment-header">
                 <div className="comment-author">
                     <User user={comment.user} displayName={true} />
@@ -119,7 +145,9 @@ const Comment = ({ comment, depth }) => {
                 </div>
 
                 <div className="comment-options">
-                    <button className="comment-options-button btn-transparent">...</button>
+                    <button className="comment-options-button btn-transparent"
+                        onClick={() => setOptionsOpen(!optionsOpen)}
+                    >...</button>
                 </div>
             </div>
 
