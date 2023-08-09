@@ -258,5 +258,79 @@ router.get("/isLiked/:id", authenticationMiddleware, async (req, res) => {
 })
 
 
+// delete a comment
+router.delete("/delete/:id", authenticationMiddleware, async (req, res) => {
+    const commentId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        // get the comment
+        const comment = await CommentModel.findOne({ _id: commentId })
+            .populate('user')
+            .select("+user");
+        // check if the comment exists
+        if (!comment) {
+            return res.status(400).json({
+                success: false,
+                error: 'Comment does not exist'
+            });
+        }
+
+        // delete the comment from the post
+        const post = await PostModel.findOne({ _id: comment.post });
+        if (!post) {
+            return res.status(400).json({
+                success: false,
+                error: 'Post does not exist'
+            });
+        }
+
+        await PostInteractionsModel.updateOne(
+            { _id: post.interactions },
+            { $pull: { comments: commentId } }
+        );
+
+        // check if the user is the owner of the comment
+        if (comment.user._id != userId) {
+            return res.status(401).json({
+                success: false,
+                error: 'User is not the owner of the comment'
+            });
+        }
+
+        // we need to delete all the replies, subreplies, etc.
+        // we will use a recursive function to do this
+        const deleteReplies = async (id) => {
+            const comment = await CommentModel.findOne({ _id: id })
+                .populate('replies')
+                .select("+replies");
+
+            if (comment) {
+                // delete all the replies
+                for (const replyId of comment.replies) {
+                    await deleteReplies(replyId);
+                }
+                // delete the comment
+                await CommentModel.deleteOne({ _id: id });
+            }
+        }
+
+        // delete the comment
+        await deleteReplies(commentId);
+
+        // Return success
+        return res.status(200).json({
+            success: true,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+});
+
+
 // ==================== EXPORT ====================
 export default router;

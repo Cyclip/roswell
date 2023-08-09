@@ -9,13 +9,13 @@ import Report from "./Report";
 import Delete from "./Delete";
 import AddComment from "./AddComment";
 import { replyToComment, getReplies } from "../services/reply";
-import { likeComment } from "../services/comment";
+import { likeComment, deleteComment } from "../services/comment";
 import { toast } from "react-hot-toast";
 
 import "../styles/Comment.css"
 
 // **NEW** comment component
-const Comment = ({ comment, depth }) => {
+const Comment = ({ comment, depth, deleteId }) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
    // number of likes
@@ -113,7 +113,33 @@ const Comment = ({ comment, depth }) => {
     }
 
     const handleReport = () => {}
-    const handleDelete = () => {}
+    const handleDelete = () => {
+        // does user own comment?
+        if (userOwnsComment) {
+            // promise toast
+            toast.promise(
+                deleteComment(comment._id, user.token),
+                {
+                    loading: "Deleting comment...",
+                    success: "Comment deleted",
+                    error: "Couldn't delete your comment",
+                }
+            ).then((resp) => {
+                if (resp.success) {
+                    // delete this comment from the parent's replies
+                    deleteId(comment._id);
+                }
+            });
+
+        } else {
+            toast.error("You can't delete this comment");
+        }
+    }
+
+    const deleteReply = (replyId) => {
+        // delete reply from replies
+        setReplies(replies.filter((reply) => reply._id !== replyId));
+    }
 
     const optionsDropdown = (
         <div className="comment-options-dropdown">
@@ -196,7 +222,12 @@ const Comment = ({ comment, depth }) => {
                 {
                     replies.length > 0 && showReplies && (
                         replies.map((reply) => (
-                            <Comment comment={reply} key={reply._id} depth={depth + 1} />
+                            <Comment
+                                comment={reply}
+                                key={reply._id}
+                                depth={depth + 1}
+                                deleteId={deleteReply}
+                            />
                         ))
                     )
                 }

@@ -71,3 +71,18 @@ export const getComment = (id) => {
 
     return response;
 }
+
+// delete comment
+export const deleteComment = async (commentId, token) => {
+    const config = { headers: { Authorization: `Bearer ${token}` }};
+    
+    const response = await axios.delete(`${BASE}/comment/delete/${commentId}`, config)
+    .then((res) => {
+        return res.data
+    }).catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}

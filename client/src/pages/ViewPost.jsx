@@ -95,6 +95,10 @@ const ViewPost = () => {
         return resp;
     }
 
+    const deleteComment = (commentId) => {
+        setComments(comments.filter(comment => comment._id !== commentId));
+    }
+
     const postContents = (
         <div className="view_post-post_header">
             <User user={post?.author} displayName={true} />
@@ -170,7 +174,11 @@ const ViewPost = () => {
                                 comments === null ? commentsLoading : (
                                     comments.length === 0 ? noComments : (
                                         comments.map((comment, idx) => (
-                                            <Comment comment={comment} key={idx}/>
+                                            <Comment
+                                                comment={comment}
+                                                key={idx}
+                                                deleteId={deleteComment}
+                                            />
                                         ))
                                     )
                                 )
