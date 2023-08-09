@@ -23,3 +23,19 @@ export const replyToComment = async (postId, parentCommentId, reply, token) => {
 
     return response;
 };
+
+
+export const getReplies = async (commentId) => {
+    const response = await axios.get(`${BASE}/reply/getReplies/${commentId}`)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    console.log("replies for", commentId, response);
+
+    return response;
+};

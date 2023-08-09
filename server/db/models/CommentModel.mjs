@@ -6,19 +6,22 @@ const CommentSchema = new Schema({
     post: {
         type: Schema.Types.ObjectId,
         ref: 'Post',
-        required: true
+        required: true,
+        select: true,
     },
     // User who created the comment
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        select: true,
     },
     // Body of the comment
     body: {
         type: String,
         required: [true, 'Please enter a body'],
-        maxlength: [1000, 'Body must be less than 1000 characters long']
+        maxlength: [1000, 'Body must be less than 1000 characters long'],
+        select: true,
     },
     // All likes
     likes: [
@@ -36,7 +39,7 @@ const CommentSchema = new Schema({
         ref: 'Comment',
         select: false,
     }],
-    // the parent comment, null if it is a top level comment
+    // the parent comment
     parentComment: {
         type: Schema.Types.ObjectId,
         ref: 'Comment',
@@ -46,7 +49,8 @@ const CommentSchema = new Schema({
     // Date the comment was created
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        select: true,
     },
 });
 

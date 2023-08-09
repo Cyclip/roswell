@@ -1,8 +1,7 @@
 @import "../App.css";
 
 .add-comment {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 10px 0;
     border-radius: 5px;
     position: relative;
 }

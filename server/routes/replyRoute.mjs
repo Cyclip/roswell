@@ -44,9 +44,10 @@ router.post("/create", authenticationMiddleware, async (req, res) => {
         await CommentModel.updateOne({ _id: parentCommentId }, { $push: { replies: replyModel._id } });
 
         // return the reply
+        const populatedComment = await CommentModel.populate(replyModel, { path: 'user' });  
         return res.status(200).json({
             success: true,
-            reply: replyModel
+            data: populatedComment,
         });
     } catch (err) {
         console.log(err);
@@ -56,6 +57,47 @@ router.post("/create", authenticationMiddleware, async (req, res) => {
         });
     }
 });
+
+
+// get replies route
+router.get("/getReplies/:commentId", softAuthenticationMiddleware, async (req, res) => {
+    try {
+        // get the comment id
+        const commentId = req.params.commentId;
+
+        // get the comment
+        const comment = await CommentModel.findOne({ _id: commentId })
+            .populate({
+                path: "replies",
+                populate: [
+                    { path: "user" },
+                ],
+            })
+            .populate('user') // Populating the "user" field of the comment
+            .populate('likes')
+            .select("+replies");
+
+        if (!comment) {
+            return res.status(400).json({
+                success: false,
+                error: 'Comment does not exist'
+            });
+        }
+
+        // return the replies
+        return res.status(200).json({
+            success: true,
+            data: comment.replies
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Server error'
+        });
+    }
+});
+
 
 // ==================== EXPORT ====================
 export default router;

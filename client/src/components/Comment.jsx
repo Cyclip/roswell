@@ -7,86 +7,175 @@ import LikeComment from "./LikeComment";
 import Reply from "./Reply";
 import Report from "./Report";
 import AddComment from "./AddComment";
-import { replyToComment } from "../services/reply";
+import { replyToComment, getReplies } from "../services/reply";
+import { likeComment, getComment } from "../services/comment";
+import { toast } from "react-hot-toast";
 
 import "../styles/Comment.css"
 
+// **NEW** comment component
 const Comment = ({ comment, depth }) => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
+   // number of likes
     const [likes, setLikes] = useState(comment.likes);
-    const [isReplying, setIsReplying] = useState(false);
+    // all replies
+    const [replies, setReplies] = useState(comment.replies || []);
+    // are the replies shown?
+    const [showReplies, setShowReplies] = useState(false);
+    // is the reply box shown?
+    const [showReplyBox, setShowReplyBox] = useState(false);
+    // have the replies been loaded?
+    const [repliesLoaded, setRepliesLoaded] = useState(false);
 
     // default depth to 0
     depth = depth || 0;
 
-    const handleReply = () => {
-        if (!user.isLoggedIn) {
-            navigate("/login");
-        } else {
-            setIsReplying(!isReplying);
+    // load replies
+    const loadReplies = async () => {
+        const resp = await getReplies(comment._id);
+        if (resp.success) {
+            console.log("loading", resp.data, "for comment", comment.body);
+            setReplies(resp.data || []);
+        }
+    }
+    
+    useEffect(() => {
+        // load replies if they haven't been loaded yet
+        if (!repliesLoaded) {
+            loadReplies();
+            setRepliesLoaded(true);
+        }
+    }, []);
+
+    // reply to comment
+    const reply = async (content) => {
+        try {
+            return replyToComment(
+                comment.post,
+                comment._id,
+                content,
+                user.token
+            );
+        } catch (error) {
+            console.log(error);
         }
     }
 
-    const handleReport = () => {}
-
-    const submitReply = (reply) => {
-        // reply to the comment and return a promise
-        return replyToComment(
-            comment.post,
-            comment._id,
-            reply,
-            user.token
-        );
+    // add reply to replies to top
+    const addReply = (reply) => {
+        setReplies([reply, ...replies]);
     }
 
-    const addReply = (reply) => {}
+    // toggle reply box
+    const toggleReplyBox = () => {
+        if (!user.isLoggedIn) {
+            navigate("/login");
+        } else {
+            setShowReplyBox(!showReplyBox);
+        }
+    }
+
+    // toggle replies
+    const toggleReplies = async () => {
+        // if replies haven't been loaded yet, load them
+        console.log("replies have " + (repliesLoaded ? "" : "not ") + "been loaded for", comment.body);
+        if (!repliesLoaded) {
+            // load replies for each of the comments
+            await loadReplies();
+            setRepliesLoaded(true);
+        }
+
+        setShowReplies(!showReplies);
+    }
+    
+    // like comment (toggles)
+    const like = async() => {
+        if (!user.isLoggedIn) {
+            navigate("/login");
+        } else {
+            const resp = await likeComment(comment._id, user.token);
+            if (resp.success) {
+                // update likes
+                setLikes(resp.likes);
+            } else {
+                toast.error("Error liking comment");
+                console.log(resp);
+            }
+        }
+    }
+
+    // report comment
+    const handleReport = () => {}
+
+    console.log("comment", comment.body, "has replies", replies, "and is depth", depth);
 
     return (
-        <div className="comment">
+        <div className="comment" style={{ marginLeft: depth * 15 }}>
             <div className="comment-header">
                 <div className="comment-author">
                     <User user={comment.user} displayName={true} />
                     <p className="comment-date">{timeDifference(comment.createdAt)}</p>
                 </div>
+
                 <div className="comment-options">
                     <button className="comment-options-button btn-transparent">...</button>
                 </div>
             </div>
+
             <p className="comment-content">{comment.body}</p>
+
             <div className="comment-interactions">
                 <div className="left">
-                    <LikeComment
-                        comment={comment}
-                        likes={likes}
-                        setLikes={setLikes}
-                    />
+                    <LikeComment likes={likes} like={like} />
 
                     <div style={{
-                        color: isReplying ? "var(--accent-blue)" : "inherit"
+                        color: showReplyBox ? "var(--accent-blue" : "inherit"
                     }}>
                         <Reply
-                            handleReply={handleReply}
+                            handleReply={toggleReplyBox}
                         />
                     </div>
                 </div>
 
-                <Report
-                    handleReport={handleReport}
-                />
-
+                <div className="right">
+                    <Report 
+                        handleReport={handleReport}
+                    />
+                </div>
             </div>
 
             <div className="comment-reply-to">
                 {
-                    isReplying && (
+                    showReplyBox && (
                         <AddComment
-                            submitCommentProp={submitReply}
+                            submitCommentProp={reply}
                             addComment={addReply}
                             canCancel={true}
-                            onCancel={handleReply}
-                            placeholder={`Reply to ${comment.user.username}`}
+                            onCancel={toggleReplyBox}
+                            placeholder={"Reply to " + comment.user.username}
                         />
+                    )
+                }
+            </div>
+
+            <div className="comment-replies">
+                {
+                    replies.length > 0 && (
+                        <button
+                            className="comment-replies-button btn-transparent"
+                            onClick={toggleReplies}
+                        >
+                            {showReplies ? "Hide" : "View"} {replies?.length} {replies.length === 1 ? "reply" : "replies"}
+                        </button>
+                    )
+                }
+
+                {
+                    replies.length > 0 && showReplies && (
+                        replies.map((reply) => (
+                            <Comment comment={reply} key={reply._id} depth={depth + 1} />
+                        ))
                     )
                 }
             </div>

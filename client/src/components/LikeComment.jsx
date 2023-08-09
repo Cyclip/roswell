@@ -4,22 +4,10 @@ import { GoHeartFill } from "react-icons/go";
 import "../styles/CommentInteraction.css"
 import { toast } from "react-hot-toast";
 import { useMediaQuery } from 'react-responsive'
-import { likeComment, unlikeComment, isLiked } from "../services/comment";
 
-const LikeComment = ({ comment, likes, setLikes }) => {
+const LikeComment = ({ likes, like }) => {
     const { user } = useContext(UserContext);
     const isMobile = useMediaQuery({ query: '(max-width: 468px)' })
-
-    const handleLike = async() => {
-        if (!user.isLoggedIn) return;
-        const resp = await likeComment(comment._id, user.token);
-
-        if (resp.success) {
-            setLikes(resp.likes || []);
-        } else {
-            toast.error("Error while liking comment");
-        }
-    }
 
     const isLiked = () => {
         if (!user.isLoggedIn) return false;
@@ -36,7 +24,7 @@ const LikeComment = ({ comment, likes, setLikes }) => {
                 "comment_interaction" +
                 (isLiked() ? " liked" : "")
             }
-            onClick={handleLike}
+            onClick={like}
         >
             <GoHeartFill
                 className="comment_interaction-icon"

@@ -50,25 +50,24 @@ export const likeComment = async (commentId, token) => {
     return response;
 }
 
-
-export const unlikeComment = async (commentId, token) => {
-    const config = { headers: { Authorization: `Bearer ${token}` }};
-    
-    const response = await axios.post(`${BASE}/comment/unlike/${commentId}`, {}, config)
-    .then((res) => {
-        return res.data
-    }).catch((error) => {
-        console.log(error);
-        return error;
-    });
-
-    return response;
-}
-
 export const isLiked = (likes, id) => {
     try {
         return likes.findIndex((i) => i._id === id) >= 0;
     } catch(err) {
         console.log("error checking if comment liked", err, likes, id);
     }
+}
+
+
+export const getComment = (id) => {
+    const response = axios.get(`${BASE}/comment/getComment/${id}`)
+    .then((res) => {
+        return res.data;
+    })
+    .catch((err) => {
+        console.log(err);
+        return err;
+    });
+
+    return response;
 }

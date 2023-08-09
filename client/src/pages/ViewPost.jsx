@@ -54,7 +54,6 @@ const ViewPost = () => {
         if (resp.success) {
             let comments = moveComments(resp.data || [])
             setComments(comments);
-            console.log(comments);
         }
     }
 
@@ -72,7 +71,6 @@ const ViewPost = () => {
     useEffect(() => {
         const fetchPost = async () => {
             const resp = await getPost(id);
-            console.log(resp);
             if (resp.success) {
                 setPost(resp.post);
             } else {
@@ -86,8 +84,8 @@ const ViewPost = () => {
 
     const addComment = (comment) => {
         setComments([
+            comment,
             ...comments,
-            comment
         ]);
     }
 
