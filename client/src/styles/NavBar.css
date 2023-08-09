@@ -150,9 +150,9 @@ svg.nav_user_caret {
     font-size: 1.5rem;
     cursor: pointer;
     /* make svg black with red stroke */
-    fill: var(--color-accent2);
-    stroke: var(--color-primary-dark);
-    stroke-width: 40;
+    fill: var(--color-text-light);
+    stroke: var(--color-primary-dark-2);
+    stroke-width: 80;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-miterlimit: 10;

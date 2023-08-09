@@ -81,6 +81,13 @@ const NewPost = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isSubmitting) return;
+
+        // disable media for now
+        if (type === "Media") {
+            toast.error("Media posts are unsupported at the moment");
+            return;
+        }
+
         setIsSubmitting(true);
         forceUpdate();
 
