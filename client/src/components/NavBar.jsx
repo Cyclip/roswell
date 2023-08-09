@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import User from "./User";
+import UserDropdown from "./UserDropdown";
 import { AiFillCaretDown } from "react-icons/ai";
 import { UserContext } from "../contexts/UserContext";
 import { useMediaQuery } from "react-responsive";
@@ -16,12 +17,45 @@ const NavBar = () => {
     const { user } = useContext(UserContext);
     const { isLoggedIn, username, profilePicture } = user;
     const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(true);
     const location = useLocation();
 
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
+    const handleOutsideClick = (event) => {
+        // Check if the click is outside the profile container and not on the user dropdown container
+        if (
+            isUserDropdownOpen &&
+            !event.target.closest('.nav_user_container') &&
+            !event.target.closest('.hamburger_menu_user_container')
+        ) {
+            setIsUserDropdownOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        if (isUserDropdownOpen || isHamburgerOpen) {
+            // Attach the event listener when profile or hamburger menu is open
+            document.addEventListener('click', handleOutsideClick);
+        } else {
+            // Remove the event listener when both menus are closed
+            document.removeEventListener('click', handleOutsideClick);
+        }
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [isUserDropdownOpen, isHamburgerOpen]);
+
     return (
         <nav>
+            {
+                (
+                    isLoggedIn && isUserDropdownOpen
+                ) ? <UserDropdown /> : null
+            }
+
             <div className="logo">
                 <Link to="/">
                     ROS<span>WELL</span>
@@ -52,7 +86,9 @@ const NavBar = () => {
                 }>New post</Link>}
                 {
                     isLoggedIn ? (
-                        <div className="nav_user_container">
+                        <div className="nav_user_container"
+                            onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                        >
                             <User user={user} displayName={true} link={false}/>
                             <AiFillCaretDown className="nav_user_caret" />
                         </div>

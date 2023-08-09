@@ -1,6 +1,7 @@
 @import "../App.css";
 
 nav {
+    position: relative;
     display: flex;
     justify-content: left;
     align-items: center;

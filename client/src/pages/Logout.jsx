@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import UserContext from "../contexts/UserContext";
 import "../styles/Logout.css"
+import { toast } from "react-hot-toast";
 
 const Logout = () => {
     const {
@@ -41,6 +42,8 @@ const Logout = () => {
         localStorage.removeItem("user");
         // redirect to home page
         navigate("/");
+        // show toast
+        toast.success("Logged out successfully!");
     });
 
     return (
