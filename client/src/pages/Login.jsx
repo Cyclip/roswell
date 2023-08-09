@@ -60,6 +60,7 @@ const Login = () => {
                 profilePicture: resp.user.profilePicture,
                 id: resp.user.id,
                 email: resp.user.email,
+                role: resp.user.role,
             };
             
             setUser(newUser);

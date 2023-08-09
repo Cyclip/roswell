@@ -11,6 +11,7 @@ const defaultUser = {
   token: '',
   profilePicture: '',
   email: '',
+  role: '',
 }
 
 export const UserProvider = ({ children }) => {

@@ -6,9 +6,11 @@ import {
     MdAdminPanelSettings
 } from "react-icons/md";
 
-const User = ({ user, displayName }) => {
+const User = ({ user, displayName, link }) => {
+    const linkTo = link ? `/user/${user.username}` : "#";
+
     return (
-        <Link to={`/user/${user.username}`} className="user">
+        <Link to={linkTo} className="user">
             <div className="user_profile_picture">
                 <img src={user.profilePicture} alt="profile_picture"
                     // fall back to default pfp if no profile picture
