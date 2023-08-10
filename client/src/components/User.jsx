@@ -6,7 +6,7 @@ import {
     MdAdminPanelSettings
 } from "react-icons/md";
 
-const User = ({ user, displayName, link }) => {
+const User = ({ user, displayName, link, subtitle }) => {
     const linkTo = link ? `/user/${user.username}` : "#";
 
     return (
@@ -19,17 +19,21 @@ const User = ({ user, displayName, link }) => {
                     }}
                 />
             </div>
-            {
-                displayName ? (
-                    <div className={
-                        "user_username" + (user.role === "admin" ? " user_admin" : "")
-                    }>
-                        {user.username} {
-                            user.role === "admin" ? <MdAdminPanelSettings className="user_admin"/> : null
-                        }
-                    </div>
-                ) : null
-            }
+            <div className="user_info">
+                {
+                    displayName ? (
+                        <div className={
+                            "user_username" + (user.role === "admin" ? " user_admin" : "")
+                        }>
+                            {user.username} {
+                                user.role === "admin" ? <MdAdminPanelSettings className="user_admin"/> : null
+                            }
+                        </div>
+                    ) : null
+                }
+
+                { subtitle }
+            </div>
         </Link>
     );
 }

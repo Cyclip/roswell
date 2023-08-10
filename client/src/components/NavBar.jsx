@@ -17,7 +17,7 @@ const NavBar = () => {
     const { user } = useContext(UserContext);
     const { isLoggedIn, username, profilePicture } = user;
     const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(true);
+    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const location = useLocation();
 
     const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
