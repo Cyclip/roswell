@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', softAuthenticationMiddleware, async (req, res) => {
     // get id
     const userId = req.user ? req.user._id : null;
-    const page = (req.query.page - 1) || 0;
+    const page = req.query.page || 0;
     const limit = req.query.limit || 10;
     
     try {

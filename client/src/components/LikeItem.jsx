@@ -24,7 +24,7 @@ const LikeItem = ({ post, setPostInteractions }) => {
     const handleLike = async () => {
         if (!user.isLoggedIn) return;
 
-        const resp = await likePost(post.id, user.token);
+        const resp = await likePost(post.id || post._id, user.token);
         if (resp.success) {
             setPostInteractions(resp.postInteractions);
         } else {

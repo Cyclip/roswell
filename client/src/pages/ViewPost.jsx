@@ -12,35 +12,6 @@ import AddComment from "../components/AddComment";
 import Comment from "../components/Comment";
 import Loading from "../assets/loading.svg";
 
-/*
-Example post
-{
-    "id": "64ca23bbcc12e40ac628d2aa",
-    "content": {
-        "_id": "64ca23bbcc12e40ac628d2a9",
-        "type": "Content",
-        "title": "awdawd",
-        "body": "",
-        "image": null,
-        "__v": 0
-    },
-    "interactions": {
-        "_id": "64ca23bbcc12e40ac628d2a8",
-        "likes": [],
-        "saves": [],
-        "comments": [],
-        "__v": 0
-    },
-    "author": {
-        "_id": "64c9b6ff348d1bc6ef1f0b2a",
-        "username": "admin",
-        "role": "user",
-        "profilePicture": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
-        "__v": 0
-    }
-}
-*/
-
 const ViewPost = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();

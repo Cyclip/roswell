@@ -1,11 +1,10 @@
-.feed_posts_pane {
+.feed_sidebar {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    flex: 4;
-    gap: 3rem;
-    border: 1px solid red;
+    flex: 2;
+    gap: 1rem;
     border-style: inset;
 }
 

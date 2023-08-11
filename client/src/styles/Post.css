@@ -2,11 +2,27 @@
 
 .post {
     width: 100%;
-    padding: 1.5rem;
     background-color: var(--color-primary-dark-3);
     box-sizing: border-box; 
     border-radius: 0.5rem;
     border: 1px solid var(--color-border);
+    transition: all 0.2s ease-in-out;
+}
+
+.post:hover {
+    background-color: var(--color-primary-dark-4);
+}
+
+
+.post_clickable {
+    cursor: pointer;
+}
+
+
+.post_contents {
+    width: 100%;
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 
 .post_subtitle {
@@ -38,4 +54,25 @@
     width: 100%;
     height: 5rem;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-primary-dark-3));
+    transition: all 0.3s ease-in-out;
+}
+
+.post:hover .post_fadeout {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-primary-dark-4));
+}
+
+.post_interactions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.post_divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-border);
+    margin: 1rem 0;
 }

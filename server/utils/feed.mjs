@@ -3,17 +3,17 @@ import PostContentModel from "../db/models/PostContentModel.mjs";
 import PostInteractionsModel from "../db/models/PostInteractionsModel.mjs";
 import UserModel from "../db/models/UserModel.mjs";
 
-const AGE_WEIGHT = 0.1;
-const LIKE_WEIGHT = 0.6;
+const AGE_WEIGHT = 1;
+const LIKE_WEIGHT = 3;
 const COMMENT_WEIGHT = 0.5;
-const SAVE_WEIGHT = 0.5;
-const FOLLOW_WEIGHT = 0.5;
+const SAVE_WEIGHT = 1.5;
+const FOLLOW_WEIGHT = 1;
 
 // ==================== FEED ALGORITHM ====================
 // Calculate the score of a post
 const calculatePostScore = (post, user) => {
-    console.log("calculating score for", post);
-    const postAge = Date.now() - post.createdAt;
+    // post age in hours
+    const postAge = (Date.now() - post.createdAt) / 1000 / 60 / 60;
     const following = user ? user.following : [];
 
     // get likes comments and saves
@@ -28,23 +28,30 @@ const calculatePostScore = (post, user) => {
     const likesByFollowing = post.interactions.likes.filter((like) => following.includes(like.user)).length;
     const commentsByFollowing = post.interactions.comments.filter((comment) => following.includes(comment.user)).length;
 
-    // calculate score
-    let score = 0;
-    score += postAge * AGE_WEIGHT;
-    score += likes * LIKE_WEIGHT;
-    score += comments * COMMENT_WEIGHT;
-    score += saves * SAVE_WEIGHT;
-    score += likesByFollowing * FOLLOW_WEIGHT;
-    score += commentsByFollowing * FOLLOW_WEIGHT;
-    
-    console.log(`score for post ${post._id}: ${score}`);
+    const ageScore = 1 / Math.pow((postAge/100) + 0.4, 1.8)
+    const likeScore = likes * LIKE_WEIGHT + likesByFollowing * FOLLOW_WEIGHT;
+    const commentScore = comments * COMMENT_WEIGHT + commentsByFollowing * FOLLOW_WEIGHT;
+    const saveScore = saves * SAVE_WEIGHT;
+    const score = ageScore + likeScore + commentScore + saveScore;
+
+    // console.log(`score for post ${post.content.title} by ${post.author.username}: ${score}`);
+    // console.log(`ageScore: ${ageScore}`);
+    // console.log(`likeScore: ${likeScore}`);
+    // console.log(`commentScore: ${commentScore}`);
+    // console.log(`saveScore: ${saveScore}`);
 
     return score;
 };
 
 // ==================== FEED UTILITY FUNCTIONS ====================
 export const getFeed = async (userId, page, limit) => {
+    // make sure we parse the page and limit to integers
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    // calculate the number of posts to skip
     const skip = page * limit;
+    console.log(`skip: ${skip} = page: ${page} * limit: ${limit}`);
 
     // Fetch all posts
     const allPosts = await PostModel.find({})
@@ -61,6 +68,12 @@ export const getFeed = async (userId, page, limit) => {
 
     // Implement pagination using array slicing
     const pagedPosts = scoredPosts.slice(skip, skip + limit);
+
+    // raise error if the numbre of posts is more than the limit
+    if (pagedPosts.length > limit) {
+        console.log("Number of posts is more than the limit", pagedPosts.length, limit, `sliced from ${skip} to ${skip + limit}`);
+        throw new Error("Number of posts is more than the limit", pagedPosts.length, limit);
+    }
 
     return {
         totalPosts: scoredPosts.length,
