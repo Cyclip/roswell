@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticationMiddleware, softAuthenticationMiddleware } from "../middleware/authMiddleware.mjs";
+import { authenticationMiddleware, softAuthenticationMiddleware, banMiddleware } from "../middleware/authMiddleware.mjs";
 import CommentModel from '../db/models/CommentModel.mjs';
 import PostInteractionsModel from '../db/models/PostInteractionsModel.mjs';
 import PostModel from '../db/models/PostModel.mjs';
@@ -42,7 +42,7 @@ router.get("/getComment/:id", softAuthenticationMiddleware, async (req, res) => 
 });
 
 // post comment route
-router.post("/create", authenticationMiddleware, async (req, res) => {
+router.post("/create", [authenticationMiddleware, banMiddleware], async (req, res) => {
     try {
         // get the user ID
         const id = req.user.id;
@@ -178,7 +178,7 @@ router.get("/get/:postId", softAuthenticationMiddleware, async (req, res) => {
 
 
 // toggle a comment
-router.post("/like/:id", authenticationMiddleware, async (req, res) => {
+router.post("/like/:id", [authenticationMiddleware, banMiddleware], async (req, res) => {
     const commentId = req.params.id;
 
     try {
@@ -259,7 +259,7 @@ router.get("/isLiked/:id", authenticationMiddleware, async (req, res) => {
 
 
 // delete a comment
-router.delete("/delete/:id", authenticationMiddleware, async (req, res) => {
+router.delete("/delete/:id", [authenticationMiddleware, banMiddleware], async (req, res) => {
     const commentId = req.params.id;
     const userId = req.user.id;
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticationMiddleware, softAuthenticationMiddleware } from "../middleware/authMiddleware.mjs";
+import { authenticationMiddleware, softAuthenticationMiddleware, banMiddleware } from "../middleware/authMiddleware.mjs";
 import CommentModel from '../db/models/CommentModel.mjs';
 import PostInteractionsModel from '../db/models/PostInteractionsModel.mjs';
 import PostModel from '../db/models/PostModel.mjs';
@@ -10,7 +10,7 @@ const router = express.Router();
 
 // ==================== ROUTES ====================
 // reply to a comment route
-router.post("/create", authenticationMiddleware, async (req, res) => {
+router.post("/create", [authenticationMiddleware, banMiddleware], async (req, res) => {
     try {
         // get user
         const userId = req.user.id;

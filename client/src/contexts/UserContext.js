@@ -12,6 +12,7 @@ const defaultUser = {
   profilePicture: '',
   email: '',
   role: '',
+  punishment: null,
 }
 
 export const UserProvider = ({ children }) => {
@@ -29,6 +30,17 @@ export const UserProvider = ({ children }) => {
             parsed = defaultUser;
 
             toast.error("Your session has expired. Please log in again.");
+          } else {
+            // Update user data
+            parsed = {
+              ...parsed,
+              id: response.user.id,
+              username: response.user.username,
+              email: response.user.email,
+              profilePicture: response.user.profilePicture,
+              role: response.user.role,
+              punishment: response.user.punishment
+            };
           }
         });
       }

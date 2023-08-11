@@ -95,7 +95,10 @@ router.post("/login", async (req, res) => {
         }
 
         // Check if user exists
-        const user = await User.findOne({ username }).select("+password");
+        const user = await User.findOne({ username })
+            .populate("punishment")
+            .select("+password")
+            .select("+punishment");
         if (user) {
             // Check if password is correct
             const isMatch = await user.matchPassword(password);
@@ -111,7 +114,8 @@ router.post("/login", async (req, res) => {
                         username: user.username,
                         email: user.email,
                         profilePicture: user.profilePicture,
-                        role: user.role
+                        role: user.role,
+                        punishment: user.punishment
                     }
                 });
 
@@ -143,7 +147,9 @@ router.post("/checkToken", async (req, res) => {
         const { username, token } = req.body;
 
         // Check if user exists
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ username: username })
+            .populate("punishment")
+            .select("+punishment");
 
         if (user) {
             // Check if token is valid
@@ -152,7 +158,15 @@ router.post("/checkToken", async (req, res) => {
             if (isValid) {
                 return res.status(200).json({
                     success: true,
-                    message: 'Token is valid'
+                    message: 'Token is valid',
+                    user: {
+                        id: user._id,
+                        username: user.username,
+                        email: user.email,
+                        profilePicture: user.profilePicture,
+                        role: user.role,
+                        punishment: user.punishment
+                    }
                 });
             }
         }

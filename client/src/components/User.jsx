@@ -7,12 +7,12 @@ import {
 } from "react-icons/md";
 
 const User = ({ user, displayName, link, subtitle }) => {
-    const linkTo = link ? `/user/${user.username}` : "#";
+    const linkTo = link ? `/user/${user?.username}` : "#";
 
     return (
         <Link to={linkTo} className="user">
             <div className="user_profile_picture">
-                <img src={user.profilePicture} alt="profile_picture"
+                <img src={user?.profilePicture} alt="profile_picture"
                     // fall back to default pfp if no profile picture
                     onError={(e) => {
                         e.target.src = DefaultPfp;
@@ -23,10 +23,10 @@ const User = ({ user, displayName, link, subtitle }) => {
                 {
                     displayName ? (
                         <div className={
-                            "user_username" + (user.role === "admin" ? " user_admin" : "")
+                            "user_username" + (user?.role === "admin" ? " user_admin" : "")
                         }>
-                            {user.username} {
-                                user.role === "admin" ? <MdAdminPanelSettings className="user_admin"/> : null
+                            {user?.username} {
+                                user?.role === "admin" ? <MdAdminPanelSettings className="user_admin"/> : null
                             }
                         </div>
                     ) : null

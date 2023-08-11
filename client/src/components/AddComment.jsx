@@ -41,7 +41,12 @@ const AddComment = ({ submitCommentProp, addComment, canCancel, onCancel, placeh
             }
             setIsPosting(false);
         }).catch((err) => {
-            toast.error("Failed to post comment");
+            // check if there is a valid message
+            if (err.response.data.message && err.response.data.message.length > 0) {
+                toast.error(err.response.data.message);
+            } else {
+                toast.error("Failed to post comment");
+            }
             console.log(err);
             setIsPosting(false);
         });

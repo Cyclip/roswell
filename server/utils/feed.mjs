@@ -28,7 +28,8 @@ const calculatePostScore = (post, user) => {
     const likesByFollowing = post.interactions.likes.filter((like) => following.includes(like.user)).length;
     const commentsByFollowing = post.interactions.comments.filter((comment) => following.includes(comment.user)).length;
 
-    const ageScore = 1 / Math.pow((postAge/100) + 0.4, 1.8)
+    // const ageScore = 1 / Math.pow((postAge/100) + 0.4, 1.8)
+    const ageScore = 1 - 5 * Math.log(0.021 * postAge + 0.43);
     const likeScore = likes * LIKE_WEIGHT + likesByFollowing * FOLLOW_WEIGHT;
     const commentScore = comments * COMMENT_WEIGHT + commentsByFollowing * FOLLOW_WEIGHT;
     const saveScore = saves * SAVE_WEIGHT;

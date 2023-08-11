@@ -4,7 +4,7 @@ import PostInteractionsModel from '../db/models/PostInteractionsModel.mjs';
 import PostModel from '../db/models/PostModel.mjs';
 import UserModel from '../db/models/UserModel.mjs';
 
-import { authenticationMiddleware } from "../middleware/authMiddleware.mjs";
+import { authenticationMiddleware, banMiddleware } from "../middleware/authMiddleware.mjs";
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
 // They can only view posts
 
 // ==================== ROUTES ====================
-router.post("/create", authenticationMiddleware, async (req, res) => {
+router.post("/create", [authenticationMiddleware, banMiddleware], async (req, res) => {
     try {
         const id = req.user.id;
 
@@ -124,7 +124,7 @@ router.get("/get/:id", async (req, res) => {
 });
 
 // toggle like on a post
-router.post("/like/:id", authenticationMiddleware, async (req, res) => {
+router.post("/like/:id", [authenticationMiddleware, banMiddleware], async (req, res) => {
     // Get post id from request
     const id = req.params.id;
 
@@ -192,7 +192,7 @@ router.post("/like/:id", authenticationMiddleware, async (req, res) => {
 });
 
 // toggle save
-router.post("/save/:id", authenticationMiddleware, async (req, res) => {
+router.post("/save/:id", [authenticationMiddleware, banMiddleware], async (req, res) => {
     // Get post id from request
     const id = req.params.id;
 

@@ -9,6 +9,7 @@ import Logout from './pages/Logout';
 import NewPost from './pages/NewPost';
 import ViewPost from './pages/ViewPost';
 import Feed from './pages/Feed';
+import BanMessage from './components/BanMessage';
 
 import { Toaster } from "react-hot-toast";
 
@@ -22,6 +23,7 @@ const App = () => {
       <div className='App'>
         <Router>
           <NavBar />
+          <BanMessage />
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

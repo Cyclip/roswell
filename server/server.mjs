@@ -11,6 +11,7 @@ import postRouter from "./routes/postRoute.mjs";
 import commentRouter from "./routes/commentRoute.mjs";
 import replyRouter from "./routes/replyRoute.mjs";
 import feedRouter from "./routes/feedRoute.mjs";
+import adminRoute from "./routes/adminRoute.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -31,6 +32,7 @@ app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/reply", replyRouter);
 app.use("/feed", feedRouter);
+app.use("/admin", adminRoute);
 
 // Catch-all route to serve the React app's index.html
 app.get("*", (req, res) => {

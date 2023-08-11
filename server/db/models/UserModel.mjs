@@ -98,7 +98,20 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Notification',
         select: false,
-    }]
+    }],
+    // penalty points
+    penaltyPoints: {
+        type: Number,
+        default: 0,
+        select: false,
+    },
+    // most recent punishment
+    punishment: {
+        type: Schema.Types.ObjectId,
+        ref: 'Punishment',
+        select: false,
+        default: null,
+    },
 });
 
 // Hash password before saving to database

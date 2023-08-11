@@ -61,6 +61,7 @@ const Login = () => {
                 id: resp.user.id,
                 email: resp.user.email,
                 role: resp.user.role,
+                punishment: resp.user.punishment,
             };
             
             setUser(newUser);

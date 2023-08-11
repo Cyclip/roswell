@@ -1,0 +1,31 @@
+@import "../App.css";
+
+.ban_message {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--color-text-accent);
+    color: var(--color-text-light);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.ban_message_title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.ban_message_reason {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.ban_message_expiration {
+    margin: 0;
+    margin-top: 1rem;
+    opacity: 0.75;
+    font-size: 0.8rem;
+}
