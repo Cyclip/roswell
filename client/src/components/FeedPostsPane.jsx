@@ -42,8 +42,6 @@ const FeedPostsPane = () => {
                 if (response.success) {
                     addPosts(response.data.posts);
                     setPage(page + 1);
-                    toast.success(`Loaded ${response.data.posts.length} posts.`);
-
                 } else {
                     toast.error("Couldn't load posts.");
                     console.log(response);

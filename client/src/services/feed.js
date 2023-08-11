@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE = process.env.REACT_APP_BASE_API;
 
-const LIMIT = 2;
+const LIMIT = 10;
 
 export const getFeed = async (page, token) => {
     const config = { headers: { Authorization: `Bearer ${token}` }};

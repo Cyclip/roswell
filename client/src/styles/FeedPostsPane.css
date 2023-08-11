@@ -6,8 +6,6 @@
     flex: 4;
     gap: 2rem;
     margin-bottom: 15rem;
-    border: 1px solid red;
-    border-style: inset;
 }
 
 .loading {

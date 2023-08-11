@@ -23,12 +23,13 @@
     width: 100%;
     padding: 1.5rem;
     box-sizing: border-box;
+    position: relative;
 }
 
 .post_subtitle {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
     gap: 0.25rem;
 
@@ -75,4 +76,28 @@
     height: 1px;
     background-color: var(--color-border);
     margin: 1rem 0;
+}
+
+.post_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.post_report_icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 0.5rem;
+    color: var(--color-text-accent);
+    transition: all 0.2s ease-in-out;
+}
+
+.post_report_icon:hover {
+    opacity: 1;
 }

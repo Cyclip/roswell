@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { BsFlagFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { BsClock } from "react-icons/bs";
 import User from "./User";
@@ -16,9 +17,16 @@ const Post = ({ post }) => {
 
     const navigate = useNavigate();
 
+    const report = () => {
+        
+    }
+
     return (
         <div className="post">
             <div className="post_contents">
+                <BsFlagFill className="post_report_icon" 
+                    onClick={report}
+                />
                 <div className="post_clickable"
                     onClick={() => {
                         navigate(`/post/${post._id}`);
