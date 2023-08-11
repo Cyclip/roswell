@@ -27,12 +27,12 @@ app.use(express.static("public"));
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-app.use("/auth", authRouter);
-app.use("/post", postRouter);
-app.use("/comment", commentRouter);
-app.use("/reply", replyRouter);
-app.use("/feed", feedRouter);
-app.use("/admin", adminRoute);
+app.use("/api/auth", authRouter);
+app.use("/api/post", postRouter);
+app.use("/api/comment", commentRouter);
+app.use("/api/reply", replyRouter);
+app.use("/api/feed", feedRouter);
+app.use("/api/admin", adminRoute);
 
 // Catch-all route to serve the React app's index.html
 app.get("*", (req, res) => {
