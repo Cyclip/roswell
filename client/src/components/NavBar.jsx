@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import User from "./User";
 import UserDropdown from "./UserDropdown";
+import Notifications from "./Notifications";
 import { AiFillCaretDown } from "react-icons/ai";
 import { UserContext } from "../contexts/UserContext";
 import { useMediaQuery } from "react-responsive";
@@ -86,12 +87,15 @@ const NavBar = () => {
                 }>New post</Link>}
                 {
                     isLoggedIn ? (
+                        <>
+                        <Notifications />
                         <div className="nav_user_container"
                             onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
                         >
                             <User user={user} displayName={true} link={false}/>
                             <AiFillCaretDown className="nav_user_caret" />
                         </div>
+                        </>
                     ) : null
                 }
             </div>

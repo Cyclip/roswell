@@ -10,7 +10,7 @@ const NotificationSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ["comment", "likes", "follow", "penalty", "punishment"],
+        enum: ["comment", "likes", "follow", "penalty", "punishment", "system"],
         required: true
     },
     // who triggered the notification
