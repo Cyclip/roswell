@@ -8,13 +8,14 @@ import UserModel from "../db/models/UserModel.mjs";
 // - source: who triggered the notification
 // - title: title of notification
 // - content: content of notification
-export const sendNotification = async (user, type, source, title, content) => {
+export const sendNotification = async (user, type, source, title, content, link) => {
     const notification = new NotificationModel({
         user: user,
         type: type,
         source: source,
         title: title,
-        content: content
+        content: content,
+        link: link
     });
     await notification.save();
 

@@ -11,7 +11,13 @@ const router = express.Router();
 router.get("/", authenticationMiddleware, async (req, res) => {
     try {
         const user = await UserModel.findOne({ _id: req.user.id })
-            .populate("notifications");
+            .populate({
+                path: "notifications",
+                populate: {
+                    path: "source"
+                }
+            })
+            .sort({ createdAt: -1 });
         
             res.status(200).json({
             success: true,
@@ -29,7 +35,13 @@ router.get("/", authenticationMiddleware, async (req, res) => {
 router.get("/unread", authenticationMiddleware, async (req, res) => {
     try {
         const user = await UserModel.findOne({ _id: req.user.id })
-            .populate("notifications");
+            .populate({
+                path: "notifications",
+                populate: {
+                    path: "source"
+                }
+            })
+            .sort({ createdAt: -1 });
 
         const unreadNotifications = user.notifications.filter(notification => !notification.read);
 
@@ -49,7 +61,8 @@ router.get("/unread", authenticationMiddleware, async (req, res) => {
 router.get("/:id", authenticationMiddleware, async (req, res) => {
     try {
         const notification = await NotificationModel.findOne({ _id: req.params.id })
-            .select("+user");
+            .select("+user")
+            .populate("source");
         if (!notification) {
             return res.status(400).json({
                 success: false,
@@ -107,7 +120,33 @@ router.patch("/:id", authenticationMiddleware, async (req, res) => {
         // return success
         return res.status(200).json({
             success: true,
+            message: "Marked as read",
             notification
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+// read all notifications
+router.patch("/", authenticationMiddleware, async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ _id: req.user.id })
+            .populate("notifications");
+        
+        // update notifications
+        user.notifications.forEach(notification => {
+            notification.read = true;
+            notification.save();
+        });
+
+        // return success
+        return res.status(200).json({
+            success: true,
+            message: "Marked all as read"
         });
     } catch (err) {
         res.status(500).json({
@@ -125,6 +164,7 @@ router.post("/", [authenticationMiddleware, adminMiddleware], async (req, res) =
         const source = req.body.source;
         const title = req.body.title || "Notification";
         const content = req.body.content || "";
+        const link = req.body.link || null;
 
         // ensure user exists
         const userExists = await UserModel.exists({ _id: user });
@@ -137,7 +177,7 @@ router.post("/", [authenticationMiddleware, adminMiddleware], async (req, res) =
         }
 
         // send notification
-        sendNotification(user, type, source, title, content);
+        sendNotification(user, type, source, title, content, link);
 
         // return success
         return res.status(200).json({

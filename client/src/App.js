@@ -9,6 +9,7 @@ import Logout from './pages/Logout';
 import NewPost from './pages/NewPost';
 import ViewPost from './pages/ViewPost';
 import Feed from './pages/Feed';
+import Notifications from './pages/Notifications';
 import BanMessage from './components/BanMessage';
 
 import { Toaster } from "react-hot-toast";
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/newpost" element={<NewPost />} />
             <Route path="/post/:id" element={<ViewPost />} />
             <Route path="/feed" element={<Feed />} />
+            <Route path="/notifications" element={<Notifications />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster

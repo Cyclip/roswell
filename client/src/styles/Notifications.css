@@ -27,3 +27,17 @@
     justify-content: center;
     padding: 0.1rem;
 }
+
+.important-notif h3 {
+    margin: 0.5rem 0;
+}
+
+.important-notif p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.important-notif a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}

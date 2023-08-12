@@ -7,7 +7,7 @@ import {
 } from "react-icons/md";
 
 const User = ({ user, displayName, link, subtitle }) => {
-    const linkTo = link ? `/user/${user?.username}` : "#";
+    const linkTo = link || true ? `/user/${user?.username}` : "#";
 
     return (
         <Link to={linkTo} className="user">

@@ -33,6 +33,11 @@ const NotificationSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now()
+    },
+    link: {
+        type: String,
+        required: false,
+        default: null,
     }
 });
 
