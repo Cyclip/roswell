@@ -6,6 +6,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { toast } from "react-hot-toast";
 
 import UnreadNotifs from "../components/UnreadNotifs";
+import AllNotifs from "../components/AllNotifs";
 
 import "../styles/NotificationsPage.css"
 
@@ -44,6 +45,9 @@ const Notifications = () => {
 
                 {
                     tab === "unread" ? <UnreadNotifs /> : null
+                }
+                {
+                    tab === "all" ? <AllNotifs /> : null
                 }
             </div>
         </div>
