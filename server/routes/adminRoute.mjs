@@ -53,11 +53,17 @@ router.post("/punish", [authenticationMiddleware, adminMiddleware], async (req, 
 
 // incur penalty to user
 router.post("/penalty", [authenticationMiddleware, adminMiddleware], async (req, res) => {
+    if (!req.body.userId || !req.body.penalty) {
+        return res.status(400).json({
+            success: false,
+            error: 'Missing fields'
+        });
+    }
+
     try {
         const userId = req.body.userId;
-        const punishment = req.body.punishment;
-        const reason = req.body.reason;
-        const duration = req.body.duration;
+        const penalty = parseInt(req.body.penalty);
+        const reason = req.body.reason || "";
 
         // check if user exists
         const user = await UserModel.findOne({ _id: userId });
@@ -69,7 +75,7 @@ router.post("/penalty", [authenticationMiddleware, adminMiddleware], async (req,
         }
 
         // apply punishment
-        await incurPenalty(user, punishment, reason, duration);
+        await incurPenalty(userId, penalty, reason);
 
         // return success
         return res.status(200).json({

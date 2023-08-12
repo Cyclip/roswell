@@ -10,27 +10,39 @@ import "../styles/Notifications.css"
 const Notifications = () => {
     const { user } = useContext(UserContext);
     const [notifications, setNotifications] = useState([]);
-    const [importantNotifShown, setImportantNotifShown] = useState(false);
+    const [newImportantNotif, setNewImportantNotif] = useState(0);
 
     const fetchNotifications = async () => {
         const response = await getUnreadNotifications(user.token);
         if (response.success) {
             setNotifications(response.notifications);
+            checkImportantNotifications(notifications);
         } else {
             console.log(response.message);
             toast.error("Failed to fetch notifications");
         }
     };
 
-    const checkImportantNotifications = (notifications) => {
-        if (importantNotifShown) return;
+    const isImportant = (notif) => {
+        return (
+            notif.type === "system" ||
+            notif.type === "penalty" ||
+            notif.type === "punishment"
+        )
+    }
 
-        const importantNotifications = notifications.filter(notification => {
-            return notification.type === "penalty" || notification.type === "punishment" || notification.type === "system";
-        });
+    const checkImportantNotifications = (notifications) => {
+        // get number of new important notifications
+        const importantNotifications = notifications.filter((notif) => isImportant(notif) && !notif.read);
+        if (importantNotifications.length > newImportantNotif) {
+            setNewImportantNotif(importantNotifications.length);
+            // continue
+        } else {
+            setNewImportantNotif(importantNotifications.length);
+            return;
+        }
 
         if (importantNotifications.length > 0) {
-            setImportantNotifShown(true);
             toast(
                 (t) => (
                     <div className="important-notif">
@@ -64,9 +76,6 @@ const Notifications = () => {
     useEffect(() => {
         // Fetch notifications when the component first mounts
         fetchNotifications();
-
-        // Check important notifications on mount
-        checkImportantNotifications(notifications);
 
         // Set up a periodic interval to update notifications
         const interval = setInterval(() => {

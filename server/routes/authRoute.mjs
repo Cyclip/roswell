@@ -1,6 +1,8 @@
 import express from "express";
 import User from "../db/models/UserModel.mjs";
 import { isEmail, isPassword, isUsername, hashPassword } from "../utils/auth.mjs";
+import { authenticationMiddleware } from "../middleware/authMiddleware.mjs";
+import UserModel from "../db/models/UserModel.mjs";
 
 const router = express.Router();
 
@@ -183,6 +185,28 @@ router.post("/checkToken", async (req, res) => {
         });
     }
 });
+
+
+// get current user punishment
+router.post("/punishment", authenticationMiddleware, async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ _id: req.user.id })
+            .select("punishment")
+            .populate("punishment");
+
+        return res.status(200).json({
+            success: true,
+            punishment: user.punishment
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: 'Internal server error'
+        });
+    }
+});
+
 
 // ==================== EXPORT ====================
 

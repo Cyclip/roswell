@@ -15,9 +15,10 @@ router.get("/", authenticationMiddleware, async (req, res) => {
                 path: "notifications",
                 populate: {
                     path: "source"
-                }
+                },
+                // sort by createdAt in descending order
+                options: { sort: { createdAt: -1 } }
             })
-            .sort({ createdAt: -1 });
         
             res.status(200).json({
             success: true,
@@ -39,9 +40,10 @@ router.get("/unread", authenticationMiddleware, async (req, res) => {
                 path: "notifications",
                 populate: {
                     path: "source"
-                }
+                },
+                // sort by createdAt in descending order
+                options: { sort: { createdAt: -1 } }
             })
-            .sort({ createdAt: -1 });
 
         const unreadNotifications = user.notifications.filter(notification => !notification.read);
 

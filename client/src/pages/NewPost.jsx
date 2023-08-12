@@ -96,20 +96,39 @@ const NewPost = () => {
         const reqContent = type === "Content" ? content : null;
         const reqImage = type === "Media" ? image : null;
 
-        const resp = await createPost(type, reqTitle, reqContent, reqImage, user.token);
+        // const resp = await createPost(type, reqTitle, reqContent, reqImage, user.token);
 
-        console.log("resp", resp);
+        // console.log("resp", resp);
 
-        if (resp.success) {
-            toast.success("Post created successfully");
-            // navigate to resp.url
-            navigate(resp.url);
-        } else {
-            toast.error(resp.message);
-        }
+        // if (resp.success) {
+        //     toast.success("Post created successfully");
+        //     // navigate to resp.url
+        //     navigate(resp.url);
+        // } else {
+        //     toast.error(resp.message);
+        // }
 
-        setIsSubmitting(false);
-        forceUpdate();
+        // setIsSubmitting(false);
+        // forceUpdate();
+
+        createPost(type, reqTitle, reqContent, reqImage, user.token)
+            .then(resp => {
+                if (resp.success) {
+                    toast.success("Post created successfully");
+                    // navigate to resp.url
+                    navigate(resp.url);
+                } else {
+                    console.log(resp);
+                    toast.error(resp.response.data.message);
+                }
+            }
+        ).catch(err => {
+            console.log(err);
+            toast.error(err.response.data.message);
+        }).finally(() => {
+            setIsSubmitting(false);
+            forceUpdate();
+        });
     }
 
     return (

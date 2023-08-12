@@ -8,6 +8,7 @@ import { MdOutlineMarkChatRead } from "react-icons/md";
 import User from "./User";
 
 import "../styles/Notif.css";
+import { parseText } from "../utils/textUtils";
 
 const Notif = ({ notif, delNotif }) => {
     const { user } = useContext(UserContext);
@@ -70,7 +71,9 @@ const Notif = ({ notif, delNotif }) => {
                             ) : null
                         }
                     </span>
-                    <span className="notif_content_text">{notif.content}</span>
+                    <span className="notif_content_text">{
+                        parseText(notif.content)
+                    }</span>
                 </div>
             </div>
 

@@ -52,3 +52,19 @@ export const checkToken = async (username, token) => {
 
     return response.data;
 }
+
+export const getPunishment = async (token) => {
+    const config = { headers: { Authorization: `Bearer ${token}` }};
+
+    console.log(`${BASE}/auth/punishment with token ${token}`);
+    
+    const response = await axios.post(`${BASE}/auth/punishment`, {}, config)
+    .then((res) => {
+        return res.data
+    }).catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}
