@@ -11,6 +11,7 @@ import SaveItem from "../components/SaveItem";
 import AddComment from "../components/AddComment";
 import Comment from "../components/Comment";
 import Loading from "../assets/loading.svg";
+import FeedSidebar from "../components/FeedSidebar";
 
 const ViewPost = () => {
     const { user } = useContext(UserContext);
@@ -158,7 +159,7 @@ const ViewPost = () => {
                     </div>
                 </div>
                 <div className="view_post-sidebar">
-
+                    <FeedSidebar />
                 </div>
             </div>
         </div>

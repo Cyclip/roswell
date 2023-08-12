@@ -1,11 +1,56 @@
+@import "../App.css";
+
 .feed_sidebar {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     flex: 2;
-    gap: 1rem;
-    border-style: inset;
+    background-color: var(--color-primary-dark-3);
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+}
+
+.feed_sidebar_title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: center;
+    background-color: var(--color-primary-dark-5);
+    border-bottom: 1px solid var(--color-border);
+    
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.feed_sidebar_title_icon {
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+}
+
+.feed_sidebar .loading {
+    width: 4rem;
+    height: 4rem;
+}
+
+.feed_sidebar .post {
+    border: none;
+    border-radius: 0;
+}
+
+.feed_sidebar .post:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.feed_sidebar .post .post_interactions {
+
 }
 
 @media screen and (max-width: 768px) {

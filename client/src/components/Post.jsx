@@ -19,7 +19,7 @@ const Post = ({ post, following }) => {
     const navigate = useNavigate();
 
     // get followings who have also liked this post
-    const followingsLikedPost = following.filter((following) => postData.interactions.likes.includes(following._id));
+    const followingsLikedPost = following?.filter((following) => postData.interactions.likes.includes(following._id)) || [];
 
     const report = () => {
         

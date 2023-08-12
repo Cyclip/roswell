@@ -11,7 +11,6 @@
 }
 
 .view_post_content {
-    border: 1px solid red;
     flex: 2;
     padding: 1rem;
     box-sizing: border-box;
@@ -22,15 +21,16 @@
 }
 
 .view_post-post {
-    border: 1px solid red;
     flex: 2;
 
     background-color: var(--color-primary-dark-2);
     padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
 }
 
 .view_post-sidebar {
-    border: 1px solid orange;
     flex: 1;
 }
 

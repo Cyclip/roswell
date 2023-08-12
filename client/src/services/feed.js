@@ -18,3 +18,17 @@ export const getFeed = async (page, token) => {
 
     return response;
 }
+
+
+export const getRecentPosts = async () => {
+    const response = await axios.get(`${BASE}/feed/recent`)
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        console.log(error);
+        return error;
+    });
+
+    return response;
+}
