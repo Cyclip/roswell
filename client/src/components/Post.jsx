@@ -95,7 +95,7 @@ const Post = ({ post, following }) => {
                                 <div className="post_subtitle">
                                     <BsClock className="post_subtitle_icon" />
                                     <div className="post_subtitle_text">
-                                        {timeDifference(post.createdAt)}
+                                        Posted {timeDifference(post.createdAt)}
                                     </div>
                                 </div>
                             }

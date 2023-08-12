@@ -6,6 +6,7 @@ import Loading from "../assets/loading.svg";
 import { getFeed } from "../services/feed";
 import Post from "./Post";
 import { getFollowers, getFollowing } from "../services/follow";
+import { useMediaQuery } from "react-responsive";
 
 import "../styles/FeedPostsPane.css";
 
@@ -20,6 +21,8 @@ const FeedPostsPane = () => {
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
     const [following, setFollowing] = useState([]);
+
+    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
     const addPosts = (newPosts) => {
         // dont include old posts
@@ -82,6 +85,18 @@ const FeedPostsPane = () => {
         loadFollowing();
     }, [firstPostsLoaded]);
 
+    const scrollAtEnd = () => {
+        // returns true if scrolled to bottom of loaded posts
+        if (isMobile) {
+            // check if reached the bottom of the component .feed_posts_pane
+            const bottomOfPane = document.querySelector(".feed_posts_pane").getBoundingClientRect().bottom;
+
+            return bottomOfPane + SCROLL_THRESHOLD <= window.innerHeight;
+        } else {
+            return window.innerHeight + document.documentElement.scrollTop + SCROLL_THRESHOLD >= document.documentElement.offsetHeight;
+        }
+    }
+
     // on scroll to bottom, load more posts
     useEffect(() => {
         const onScroll = () => {
@@ -89,7 +104,7 @@ const FeedPostsPane = () => {
             if (reachedEnd) return;
 
             if (
-                window.innerHeight + document.documentElement.scrollTop + SCROLL_THRESHOLD >= document.documentElement.offsetHeight
+                scrollAtEnd()
                 && !isLoading
             ) {
                 loadPosts();

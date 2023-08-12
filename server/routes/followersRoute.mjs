@@ -80,6 +80,13 @@ router.get('/:id?', softAuthenticationMiddleware, async (req, res) => {
 // POST /api/followers/:id (follow user with id)
 router.post('/follow/:id', authenticationMiddleware, banMiddleware, async (req, res) => {
     try {
+        if (req.params.id === req.user.id) {
+            return res.status(400).json({
+                success: false,
+                message: 'You cannot follow yourself'
+            });
+        }
+
         // update user (add to set)
         await UserModel.updateOne({ _id: req.params.id }, { $addToSet: { followers: req.user.id } });
 
