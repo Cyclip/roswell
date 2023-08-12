@@ -46,10 +46,7 @@ export async function banMiddleware(req, res, next) {
         .populate('punishment')
         .select('+punishment');
 
-    console.log("checking for ban", user);
-
     if (user.punishment) {
-        console.log("punishment exists")
         // check if punishment is still active
         if (user.punishment.expiresAt > Date.now()) {
             return res.status(403).json({ message: 'You are currently banned.' });

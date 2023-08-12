@@ -8,21 +8,15 @@ const BanMessage = () => {
     const { user } = useContext(UserContext);
     
     const isBanned = () => {
-        console.log(user);
-        if (user.punishment === null) {
-            console.log("user is not banned (null punishment)");
+        if (user.punishment === null || user.punishment === undefined) {
             return false;
         }
-        if (user.punishment.expiresAt === null) {
-            console.log("user is banned perm (null expiration)");
+        if (user.punishment?.expiresAt === null) {
             return true;
         }
 
         const now = new Date();
-        const expiration = new Date(user.punishment.expiresAt);
-
-        console.log("user is", now < expiration ? "banned" : "not banned")
-        console.log(now, expiration)
+        const expiration = new Date(user.punishment?.expiresAt);
 
         return now < expiration;
     }

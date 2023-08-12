@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Loading from "../assets/loading.svg";
 import { getFeed } from "../services/feed";
 import Post from "./Post";
+import { getFollowers, getFollowing } from "../services/follow";
 
 import "../styles/FeedPostsPane.css";
 
@@ -18,6 +19,7 @@ const FeedPostsPane = () => {
     const [reachedEnd, setReachedEnd] = useState(false);
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
+    const [following, setFollowing] = useState([]);
 
     const addPosts = (newPosts) => {
         // dont include old posts
@@ -56,12 +58,28 @@ const FeedPostsPane = () => {
             });
     }
 
+    const loadFollowing = async () => {
+        if (!user.isLoggedIn) return;
+
+        const response = await getFollowing(user.token);
+
+        if (response.success) {
+            setFollowing(response.following);
+        } else {
+            toast.error("Couldn't load following.");
+            console.log(response);
+        }
+    }
+
     useEffect(() => {
         // only call loadPosts once at the start
         if (!firstPostsLoaded) {
             setFirstPostsLoaded(true);
             loadPosts();
         }
+
+        // get followers if not already loaded
+        loadFollowing();
     }, [firstPostsLoaded]);
 
     // on scroll to bottom, load more posts
@@ -87,7 +105,11 @@ const FeedPostsPane = () => {
         <div className="feed_posts_pane">
             {
                 posts.length > 0 ? posts.map((post) => (
-                    <Post key={post._id} post={post} />
+                    <Post 
+                        key={post._id}
+                        post={post}
+                        following={following}
+                    />
                 )) : <div className="no_posts">
                     <h1>No posts found</h1>
                 </div>

@@ -12,6 +12,7 @@ import commentRouter from "./routes/commentRoute.mjs";
 import replyRouter from "./routes/replyRoute.mjs";
 import feedRouter from "./routes/feedRoute.mjs";
 import adminRoute from "./routes/adminRoute.mjs";
+import followersRoute from "./routes/followersRoute.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,6 +34,7 @@ app.use("/api/comment", commentRouter);
 app.use("/api/reply", replyRouter);
 app.use("/api/feed", feedRouter);
 app.use("/api/admin", adminRoute);
+app.use("/api/followers", followersRoute);
 
 // Catch-all route to serve the React app's index.html
 app.get("*", (req, res) => {

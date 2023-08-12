@@ -115,7 +115,7 @@ const Comment = ({ comment, depth, deleteId }) => {
     const handleReport = () => {}
     const handleDelete = () => {
         // does user own comment?
-        if (userOwnsComment) {
+        if (userOwnsComment || user.role === "admin") {
             // promise toast
             toast.promise(
                 deleteComment(comment._id, user.token),
@@ -144,7 +144,7 @@ const Comment = ({ comment, depth, deleteId }) => {
     const optionsDropdown = (
         <div className="comment-options-dropdown">
             {
-                userOwnsComment && (
+                (userOwnsComment || user.role === "admin") && (
                     <Delete handleDelete={handleDelete} />
                 )
             }

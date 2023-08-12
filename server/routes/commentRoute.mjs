@@ -292,10 +292,14 @@ router.delete("/delete/:id", [authenticationMiddleware, banMiddleware], async (r
 
         // check if the user is the owner of the comment
         if (comment.user._id != userId) {
-            return res.status(401).json({
-                success: false,
-                error: 'User is not the owner of the comment'
-            });
+            // is user admin?
+            const user = await UserModel.findOne({ _id: userId });
+            if (user.role !== "admin") {
+                return res.status(401).json({
+                    success: false,
+                    error: 'User is not the owner of the comment'
+                });
+            }
         }
 
         // we need to delete all the replies, subreplies, etc.

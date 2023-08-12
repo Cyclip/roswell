@@ -10,19 +10,73 @@ import LikeItem from "./LikeItem";
 import CommentCount from "./CommentCount";
 import SaveItem from "./SaveItem";
 import "../styles/Post.css";
+import DefaultPfp from "../assets/pfp.png";
 
-const Post = ({ post }) => {
+const Post = ({ post, following }) => {
     const { user } = useContext(UserContext);
     const [postData, setPostData] = useState(post);
 
     const navigate = useNavigate();
 
+    // get followings who have also liked this post
+    const followingsLikedPost = following.filter((following) => postData.interactions.likes.includes(following._id));
+
     const report = () => {
         
     }
 
+    const followingBanner = (
+        <div className="post_following_banner">
+            <div className="post_following_banner_pfps">
+                {/* display up to 3 different profile pictures */}
+                {
+                    followingsLikedPost.slice(0, 3).map((following, index) => (
+                        <img key={index} className="post_following_banner_pfp" src={following.profilePicture} alt="profile picture" 
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = DefaultPfp;
+                            }}
+                        />
+                    ))
+                }
+            </div>
+            <div className="post_following_banner_text">
+                {/*  */}
+
+                <ul className="post_following_banner_text_list">
+                    {
+                        followingsLikedPost.slice(0, 3).map((following, index) => (
+                            <li key={index} className="post_following_banner_text_list_item">
+                                <span className="post_following_banner_text_list_item_username">{following.username}</span>
+                            </li>
+                        ))
+                    }
+                </ul>
+
+                {
+                    followingsLikedPost.length > 3 ? (
+                        <span> and {followingsLikedPost.length - 3} others</span>
+                    ) : followingsLikedPost.length === 1 ? (
+                        <span> liked this</span>
+                    ) : (
+                        <span> liked this</span>
+                    )
+                }
+            </div>
+        </div>
+    );
+
+    // get followings who have also liked this post
+    useEffect(() => {
+        if (user) {}
+    }, [following]);
+
     return (
         <div className="post">
+            {
+                followingsLikedPost.length > 0 &&
+                followingBanner
+            }
             <div className="post_contents">
                 <BsFlagFill className="post_report_icon" 
                     onClick={report}
