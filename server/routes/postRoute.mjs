@@ -5,6 +5,7 @@ import PostModel from '../db/models/PostModel.mjs';
 import UserModel from '../db/models/UserModel.mjs';
 
 import { authenticationMiddleware, banMiddleware } from "../middleware/authMiddleware.mjs";
+import { handleLikesMilestones } from '../utils/notif.mjs';
 
 const router = express.Router();
 
@@ -176,6 +177,12 @@ router.post("/like/:id", [authenticationMiddleware, banMiddleware], async (req, 
 
         // Save post interactions
         await postInteractions.save();
+
+        // handle likes milestone
+        handleLikesMilestones(
+            post,
+            postInteractions,
+        );
 
         // Return post interactions
         return res.status(200).json({

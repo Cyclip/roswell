@@ -1,3 +1,5 @@
+@import "../App.css";
+
 .notif {
     display: flex;
     align-items: center;
@@ -21,7 +23,7 @@
 }
 
 .notif.read {
-    opacity: 0.75;
+    opacity: 0.6;
 }
 
 .notif:hover {
@@ -84,4 +86,8 @@
 
 .notif:hover .notif_mark_read {
     opacity: 0.5;
+}
+
+.notif:not(.read) {
+    background-color: #252729;
 }

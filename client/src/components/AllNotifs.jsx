@@ -8,7 +8,7 @@ import Loading from "../assets/loading.svg";
 import { MdOutlineMarkChatRead } from "react-icons/md";
 import Notif from "./Notif";
 
-import "../styles/AllNotifs.css";
+import "../styles/UnreadNotifs.css";
 
 const AllNotifs = () => {
     const { user } = useContext(UserContext);
@@ -44,7 +44,6 @@ const AllNotifs = () => {
             .then((res) => {
                 if (res.success) {
                     toast.success(res.message);
-                    setNotifs([]);
                 } else {
                     toast.error(res.message);
                 }

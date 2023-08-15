@@ -18,7 +18,12 @@ const PostInteractionsSchema = new Schema({
     saves: {
         type: Number,
         default: 0
-    }
+    },
+    // last likes milestone
+    lastLikesMilestone: {
+        type: Number,
+        default: 0
+    },
 });
 
 export default mongoose.model('PostInteractions', PostInteractionsSchema);

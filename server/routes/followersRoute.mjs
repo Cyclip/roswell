@@ -1,6 +1,7 @@
 import express from "express";
 import UserModel from "../db/models/UserModel.mjs";
 import { authenticationMiddleware, banMiddleware, softAuthenticationMiddleware } from "../middleware/authMiddleware.mjs";
+import { sendNotification } from "../utils/notif.mjs";
 
 const router = express.Router();
 
@@ -92,6 +93,16 @@ router.post('/follow/:id', authenticationMiddleware, banMiddleware, async (req, 
 
         // update current user (add to set)
         await UserModel.updateOne({ _id: req.user.id }, { $addToSet: { following: req.params.id } });
+
+        // notify user
+        sendNotification(
+            req.params.id,
+            'follow',
+            req.user.id,
+            `${req.user.username} followed you!`,
+            "Consider following them back!",
+            `/profile/${req.user.id}`
+        )
 
         // return success
         return res.status(200).json({

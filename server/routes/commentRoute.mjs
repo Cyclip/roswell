@@ -4,6 +4,7 @@ import CommentModel from '../db/models/CommentModel.mjs';
 import PostInteractionsModel from '../db/models/PostInteractionsModel.mjs';
 import PostModel from '../db/models/PostModel.mjs';
 import UserModel from '../db/models/UserModel.mjs';
+import { sendNotification } from "../utils/notif.mjs";
 
 const router = express.Router();
 
@@ -96,6 +97,16 @@ router.post("/create", [authenticationMiddleware, banMiddleware], async (req, re
         // add the comment to the post
         postInteractions.comments.push(commentModel._id);
         await postInteractions.save();
+
+        // notify post author
+        sendNotification(
+            post.author,
+            "comment",
+            user._id,
+            `${user.username} commented on your post`,
+            `${comment}`,
+            `/post/${post._id}`
+        );
 
         return res.status(200).json({
             success: true,

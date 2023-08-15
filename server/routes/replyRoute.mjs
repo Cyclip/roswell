@@ -4,6 +4,7 @@ import CommentModel from '../db/models/CommentModel.mjs';
 import PostInteractionsModel from '../db/models/PostInteractionsModel.mjs';
 import PostModel from '../db/models/PostModel.mjs';
 import UserModel from '../db/models/UserModel.mjs';
+import { sendNotification } from "../utils/notif.mjs";
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post("/create", [authenticationMiddleware, banMiddleware], async (req, re
     try {
         // get user
         const userId = req.user.id;
+        const author = await UserModel.findOne({ _id: userId }).select('username');
 
         // get the body from the request
         const postId = req.body.postId;
@@ -42,6 +44,19 @@ router.post("/create", [authenticationMiddleware, banMiddleware], async (req, re
         // save all
         await replyModel.save();
         await CommentModel.updateOne({ _id: parentCommentId }, { $push: { replies: replyModel._id } });
+       
+        // get author of original comment
+        const parentComment = await CommentModel.findOne({ _id: parentCommentId }).populate('user');
+
+        // notify the author of the parent comment
+        sendNotification(
+            parentComment.user._id,
+            "comment",
+            userId,
+            `${author.username} replied to your comment`,
+            reply,
+            `/post/${postId}`
+        )
 
         // return the reply
         const populatedComment = await CommentModel.populate(replyModel, { path: 'user' });  
