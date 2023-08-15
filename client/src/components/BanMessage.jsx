@@ -15,7 +15,6 @@ const BanMessage = () => {
             if (user.isLoggedIn) {
                 // get punishment
                 const punishment = await getPunishment(user.token);
-                console.log(punishment);
                 if (punishment.success) {
                     setPunishment(punishment.punishment);
                 } else {

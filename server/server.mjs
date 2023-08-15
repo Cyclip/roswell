@@ -14,6 +14,7 @@ import feedRouter from "./routes/feedRoute.mjs";
 import adminRoute from "./routes/adminRoute.mjs";
 import followersRoute from "./routes/followersRoute.mjs";
 import notifRoute from "./routes/notifRoute.mjs";
+import profileRoute from "./routes/profileRoute.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,6 +38,7 @@ app.use("/api/feed", feedRouter);
 app.use("/api/admin", adminRoute);
 app.use("/api/followers", followersRoute);
 app.use("/api/notif", notifRoute);
+app.use("/api/profile", profileRoute);
 
 // Catch-all route to serve the React app's index.html
 app.get("*", (req, res) => {

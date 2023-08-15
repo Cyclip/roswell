@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import NavBar from './components/NavBar';
@@ -9,6 +10,8 @@ import Logout from './pages/Logout';
 import NewPost from './pages/NewPost';
 import ViewPost from './pages/ViewPost';
 import Feed from './pages/Feed';
+import Profile from './pages/Profile';
+
 import Notifications from './pages/Notifications';
 import BanMessage from './components/BanMessage';
 
@@ -34,6 +37,7 @@ const App = () => {
             <Route path="/post/:id" element={<ViewPost />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/notifications" element={<Notifications />} />
+            <Route path="/user/:username" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster

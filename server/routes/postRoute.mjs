@@ -50,6 +50,8 @@ router.post("/create", [authenticationMiddleware, banMiddleware], async (req, re
         await postContent.save();
         await post.save();
 
+        await UserModel.updateOne({ _id: id }, { $push: { posts: post._id } });
+
         // Return post and url
         return res.status(201).json({
             success: true,

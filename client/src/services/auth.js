@@ -14,8 +14,6 @@ export const login = async (username, password) => {
         return error.response;
     });
 
-    console.log(response);
-
     return response.data;
 }
 
@@ -31,8 +29,6 @@ export const register = async (username, email, password) => {
         console.log(error);
         return error.response;
     });
-
-    console.log(response);
 
     return response.data;
 }
@@ -55,8 +51,6 @@ export const checkToken = async (username, token) => {
 
 export const getPunishment = async (token) => {
     const config = { headers: { Authorization: `Bearer ${token}` }};
-
-    console.log(`${BASE}/auth/punishment with token ${token}`);
     
     const response = await axios.post(`${BASE}/auth/punishment`, {}, config)
     .then((res) => {

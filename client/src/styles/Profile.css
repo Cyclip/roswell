@@ -1,0 +1,162 @@
+@import "../App.css";
+
+.profilePage {
+    padding: 3rem 12rem;
+    width: 100%;
+    height: 90vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.profile_header, .profile_userposts {
+    flex: 1;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: var(--color-primary-dark-4);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.profile_userinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.profile_userinfo_picture {
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile_userinfo_picture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile_userinfo_picture_edit {
+    position: absolute;
+    bottom: 0.2rem;
+    right: 0.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    padding: 0.2rem;
+    background-color: var(--color-primary-dark-4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    fill: #ffffff88;
+    transition: all 0.2s ease-in-out;
+}
+
+.profile_userinfo_picture_edit:hover {
+    background-color: var(--color-primary-dark-3);
+    fill: #ffffff;
+}
+
+.profile_userinfo_details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.profile_userinfo_details_username {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile_userinfo_details_username.admin {
+    color: var(--color-accent2);
+    font-weight: 500;
+}
+
+.profile_banmsg {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-accent3);
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile_userstats {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    margin: 1rem 0;
+}
+
+.profile_userstats_stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.profile_userstats_number {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.profile_userstats_text {
+    font-size: 0.8rem;
+    font-weight: 300;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.profile_userposts {
+    flex: 2;
+}

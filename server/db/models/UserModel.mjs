@@ -93,6 +93,12 @@ const UserSchema = new Schema({
         ref: 'User',
         select: false,
     }],
+    posts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+        select: false,
+        default: [],
+    }],
     // User's notifications
     notifications: [{
         type: Schema.Types.ObjectId,
