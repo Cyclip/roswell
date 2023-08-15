@@ -45,3 +45,13 @@
     justify-content: center;
     opacity: 0.5;
 }
+
+@media screen and (max-width: 490px) {
+    .unread-notifs {
+        padding: 1rem;
+    }
+
+    .no-notifs {
+        font-size: 0.8rem;
+    }
+}

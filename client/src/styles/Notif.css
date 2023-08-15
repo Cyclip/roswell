@@ -91,3 +91,23 @@
 .notif:not(.read) {
     background-color: #252729;
 }
+
+@media screen and (max-width: 768px) {
+    .notif_title {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .notif {
+        /* padding: 1rem; */
+    }
+
+    .notif_title {
+        font-size: 0.8rem;
+    }
+
+    .notif_content_text {
+        font-size: 0.7rem;
+    }
+}

@@ -190,7 +190,8 @@ svg.nav_user_caret {
     }
 
     nav .hamburger {
-        display: block;
+        display: flex;
+        gap: 10px;
     }
 
     nav .hamburger_menu {

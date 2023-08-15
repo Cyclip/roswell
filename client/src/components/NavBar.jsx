@@ -106,6 +106,7 @@ const NavBar = () => {
                         <div className="hamburger" onClick={
                             () => setIsHamburgerOpen(!isHamburgerOpen)
                         }>
+                            <Notifications />
                             <RxHamburgerMenu />
                         </div>
             
